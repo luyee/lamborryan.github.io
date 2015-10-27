@@ -1,0 +1,15 @@
+markdown: rdiscount
+permalink: /:title/
+url: http://lamborryan.github.io
+#highlighter: pygments
+pygments: true
+name: 追风的蓝宝
+description: 追风的蓝宝 | keep learning.
+author: 追风的蓝宝
+email: lamborryan@gmail.com
+duoshuo: lamborryan
+hub:
+safe: true
+paginate: 100
+github: lamborryan
+about: "菜鸟一枚。"
