@@ -2,7 +2,7 @@
 layout: post
 title: Mac Install MySQL-python
 date: 2015-10-27 19:34:30
-categories: Python
+categories: 编程语言
 tags: Python
 ---
 ##一.用pip安装MySQL-python会爆出以下错误
