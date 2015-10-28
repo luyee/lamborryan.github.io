@@ -8,18 +8,18 @@ tags: Hive
 #Hive如何使用Custom方式进行认证
 
 ##一.简介
-Hive默认情况下是不需任何认证就可以访问HiveServer2的，这种情况下显然不适合生产环节的。
+Hive默认情况下是不需任何认证就可以访问HiveServer2的，这种情况下显然不适合生产环境。
 
 * Hive具有三种用户登入认证方式:
-*    1.LDAP Authentication using OpenLDAP
-*    2.Setting up Authentication with Pluggable Access Modules
-*    3.Configuring Custom Authentication
+* 1. LDAP Authentication using OpenLDAP
+* 2. Setting up Authentication with Pluggable Access Modules
+* 3. Configuring Custom Authentication
 
 本文主要介绍第三种Custom方式。
 
 * To implement custom authentication for HiveServer2, create a custom Authenticator class derived from the following interface:
 
-要实现Custom方式的认证，需要实现一下接口:
+要实现Custom方式的认证，需要实现以下接口:
 
 {% highlight java linenos %}
 public interface PasswdAuthenticationProvider {
@@ -106,12 +106,12 @@ public class CustomPasswdAuthenticator implements PasswdAuthenticationProvider,C
 {% endhighlight java %}
 
 * 以上代码实现了一个hook:
-* 1.在进行认证的时候从配置文件中读取用户名和密码，并判断是否当前的用户名密码一致。
-* 2.hive-site.xml里面hive.jdbc.auth.config项的值存的是存放用户名和密码的文件路径，如此就可以不用在线更新用户名密码。
+* 1. 在进行认证的时候从配置文件中读取用户名和密码，并判断是否与当前的用户名密码一致。
+* 2. hive-site.xml里面hive.jdbc.auth.config项的值存的是用户名和密码的文件路径，如此就可以在线更新用户名密码。
 
 ##三.配置
 
-###1.maven依赖配置
+###1. maven依赖配置
 
 {% highlight bash linenos %}
 <dependencies>
@@ -130,7 +130,7 @@ public class CustomPasswdAuthenticator implements PasswdAuthenticationProvider,C
 
 将编译好的包存放入 ${HIVE_HOME}/lib下面
 
-###2.修改hive-site.xml
+###2. 修改hive-site.xml
 
 {% highlight bash linenos %}
  <property>
@@ -161,9 +161,9 @@ public class CustomPasswdAuthenticator implements PasswdAuthenticationProvider,C
 </property>
 {% endhighlight bash %}
 
-###3.设置用户名和密码
+###3. 设置用户名和密码
 
-每当用户进行认证，都会读取hive.jdbc.auth.config的值，比如这里的/kiss/configs/hive/auth.properties，该配置文件存放了用户名和对应的密码
+每当用户进行认证，都会读取hive.jdbc.auth.config的值，比如这里的/kiss/configs/hive/auth.properties，该配置文件存放了所有的用户名和对应的密码
 
 {% highlight bash linenos %}
 hive.jdbc_passwd.auth.admin=AAAAAAAAAAAA
@@ -179,7 +179,7 @@ hive.jdbc_passwd.auth.lamboray=BBBBBBBBBB
 </property>
 {% endhighlight bash %}
 
-该配置使得hive server会以提交用户的身份去执行语句，如果设置为false，则会以起hive server daemon的admin user来执行语句。
+该配置使得hive server会以提交用户的身份去执行语句，如果设置为false，则会以起hive server daemon的admin user(一般情况是root)来执行语句。
 
 ##四.验证
 
@@ -188,12 +188,12 @@ hive.jdbc_passwd.auth.lamboray=BBBBBBBBBB
 {% highlight bash linenos %}
 import pyhs2
 with pyhs2.connect(host='127.0.0.1',
-                   port=10000,
-                   authMechanism="PLAIN",
-                   user='lamborryan',
-                   password='BBBBBBBBBB',
-                   database='default',
-                   timeout=30000) as conn:
+                  port=10000,
+                  authMechanism="PLAIN",
+                  user='lamborryan',
+                  password='BBBBBBBBBB',
+                  database='default',
+                  timeout=30000) as conn:
     with conn.cursor() as cur:
          cur.execute("select * from default.test")
          print cur.fetchmany(100)
@@ -203,4 +203,6 @@ with pyhs2.connect(host='127.0.0.1',
 
 ##五.总结
 
-该方法是个比较简单且有效的方法。本文到此结束
+该方法是个比较简单且有效的方法。
+
+本文到此结束。
