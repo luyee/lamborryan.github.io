@@ -11,9 +11,9 @@ tags: Hive
 Hive默认情况下是不需任何认证就可以访问HiveServer2的，这种情况下显然不适合生产环境。
 
 * Hive具有三种用户登入认证方式:
-* 1. LDAP Authentication using OpenLDAP
-* 2. Setting up Authentication with Pluggable Access Modules
-* 3. Configuring Custom Authentication
+* 1.LDAP Authentication using OpenLDAP
+* 2.Setting up Authentication with Pluggable Access Modules
+* 3.Configuring Custom Authentication
 
 本文主要介绍第三种Custom方式。
 
@@ -106,8 +106,8 @@ public class CustomPasswdAuthenticator implements PasswdAuthenticationProvider,C
 {% endhighlight java %}
 
 * 以上代码实现了一个hook:
-* 1. 在进行认证的时候从配置文件中读取用户名和密码，并判断是否与当前的用户名密码一致。
-* 2. hive-site.xml里面hive.jdbc.auth.config项的值存的是用户名和密码的文件路径，如此就可以在线更新用户名密码。
+* 1.在进行认证的时候从配置文件中读取用户名和密码，并判断是否与当前的用户名密码一致。
+* 2.hive-site.xml里面hive.jdbc.auth.config项的值存的是用户名和密码的文件路径，如此就可以在线更新用户名密码。
 
 ##三.配置
 
