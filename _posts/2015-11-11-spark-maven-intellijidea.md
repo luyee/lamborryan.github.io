@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Spark学习(2)之Intellij Idea和Maven部署spark应用
-date: 2015-11-01 12:29:30
+date: 2015-11-11 12:29:30
 categories: 大数据
 tags: Spark
 ---
@@ -190,7 +190,7 @@ Error compiling sbt component 'compiler-interface-2.10.0-52.0'
 </dependency>
 {% endhighlight xml %}
 spark demo:
-{% highlight xml linenos %}
+{% highlight java linenos %}
 package com.lamborryan.spark
 
 import org.apache.spark.SparkContext
@@ -203,7 +203,7 @@ object BasicMap{
         println(result.collect().mkString(","))
     }
 }
-{% endhighlight xml %}
+{% endhighlight java %}
 至此，spark的开发环境算是部署好了，虽然sbt会更适合scala，奈何实在太慢。
 
 本文完
