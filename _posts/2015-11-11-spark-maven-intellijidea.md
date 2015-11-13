@@ -206,4 +206,14 @@ object BasicMap{
 {% endhighlight java %}
 至此，spark的开发环境算是部署好了，虽然sbt会更适合scala，奈何实在太慢。
 
+最后需要注意的是:
+我们打包应用的时候，不需要将spark的依赖包spark-core_2.10打包进去，所以需要增加点限制.
+{% highlight java linenos %}
+<dependency>
+  <groupId>org.apache.spark</groupId>
+  <artifactId>spark-core_2.10</artifactId>
+  <version>1.5.0</version>
+  <scope>provided</scope>
+</dependency>
+{% endhighlight java %}
 本文完
