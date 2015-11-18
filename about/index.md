@@ -11,7 +11,7 @@ comments: no
 * 本名阮城锋, 13年通信专业小硕
 * 小小码农一枚, 玩的有点杂, 喜欢大数据, 喜欢各种开源技术
 * 看过以下但不仅限于以下列出的项目的源码：
-* Hadoop, Solr/Lucene, Hive, Luigi
+* Hadoop, Solr/Lucene, Hive
 * 使用过以下但不仅限于以下列出的语言
 * Java, Shell, Python
 
