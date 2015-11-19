@@ -80,6 +80,23 @@ TBLPROPERTIES("mongo.properties.path"="${hivevar:properties_root}/product.proper
 8. 一个表对应一个mongo.properties.path, 所以当表很多的时候需要写很多个配置文件，这个可以后续进行优化
 9. mongo.properties.path的路径是hdfs的文件路径
 
+### Spark SQL
+
+Spark 已经支持兼容了Hive, 虽然并没有完全兼容。
+
+要使用Spark SQL查询需要加上面几个包放到SPARK_CLASSPATH里面，可以在spark-env.sh进行修改。
+
+接着启动spark thrift即可(不用启动hive server2)用beeline访问 sh sbin/start-thriftserver.sh。
+
+需要注意的是:
+
+1. Hive存放properties是在hdfs上, 而spark则是在本地文件系统中。
+2. 之前使用STRUCT存放ObjectId, 会在spark上打warn日志
+
+15/11/19 17:23:15 WARN BSONSerDe: SWEET ------ structName is oid
+15/11/19 17:23:15 WARN BSONSerDe: SWEET ------ structName is bsontype
+
+
 ### 注意事项
 
 #### 权限问题
@@ -103,7 +120,9 @@ at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1295)
 
 从上面两段话可以看出需要clusterManager role 才能进行split
 
-文章来自<MongoDB Connector for Hadoop with Authentication>(http://pauldone.blogspot.com/2014/05/mongodb-connector-authentication.html>)
+文章来自
+http://pauldone.blogspot.com/2014/05/mongodb-connector-authentication.html
+https://github.com/mongodb/mongo-hadoop/wiki/Usage-with-Authentication
 
 #### 删除drop table
 
