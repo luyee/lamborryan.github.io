@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Hive数据仓库之利用rownumber进行数据去重
+title: Hive数据仓库之数据去重
 date: 2015-11-24 13:30:00
 categories: 大数据
 tags: Hive
 ---
-# Hive数据仓库之利用rownumber进行数据去重
+# Hive数据仓库之数据去重
 
 ## 使用场景
 
@@ -16,7 +16,7 @@ tags: Hive
 
 ## 使用例子
 
-### 先新建raw_number文件存放以下数据:
+### 新建raw_number文件存放以下数据:
 {% highlight bash sql %}
 1,hangzhou,28
 1,shanghai,30
@@ -26,14 +26,14 @@ tags: Hive
 3,shaoxing,10
 {% endhighlight sql %}
 
-### 新建一张表并加载数据:
+### 新建表并加载数据:
 {% highlight bash sql %}
 CREATE TABLE test_row_number(id int,city STRING,num int)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' ;
 LOAD DATA LOCAL INPATH '/home/bmw/raw_number' OVERWRITE INTO TABLE test_row_number;
 {% endhighlight sql %}
 
-### 进行去重
+### 去重
 
 {% highlight bash sql %}
 select t.id, t.city, t.num
@@ -54,9 +54,7 @@ where t.rownumber = 1
 {% endhighlight sql %}
 
 ### 说明
-
-* 其中distribute by id 表示以id进行分区, sort by num desc 以num进行倒序进行排序(当然可以改成asc来获取最小的一个), t.rownumber = 1表示只取最大的一个。
-
-* distribute by + sort 实现的是分区排序, 它只保证该分区的有效; order by 是全局排序, 它在单个reduce里面进行排序, 因此性能可能会很差。 这里分区排序刚好。详见 http://www.crazyant.net/1456.html
+* 其中distribute by id 表示以id进行分区, sort by num desc 以num进行倒序(当然可以改成asc来获取最小的一个), t.rownumber = 1表示只取最大的一个。
+* distribute by + sort 实现的是分区排序, 它只保证该分区的有序; order by 是全局排序, 它在单个reduce里面进行排序, 因此性能可能会很差。 这里使用分区排序刚好。详见 http://www.crazyant.net/1456.html
 
 本文完
