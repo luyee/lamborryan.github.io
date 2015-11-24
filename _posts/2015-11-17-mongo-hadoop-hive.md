@@ -3,7 +3,7 @@ layout: post
 title: Hive数据仓库之在mongo上进行hsql查询
 date: 2015-11-17 12:29:30
 categories: 大数据
-tags: Hive, Mongo-Hadoop
+tags: Hive Mongo-Hadoop
 ---
 # Hive数据仓库之mongo-hadoop的使用
 
