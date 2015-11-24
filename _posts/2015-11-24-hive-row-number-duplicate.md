@@ -16,23 +16,24 @@ tags: Hive
 
 ## 使用例子
 
-1. 先新建raw_number文件存放以下数据:
+### 先新建raw_number文件存放以下数据:
+{% highlight bash sql %}
 1,hangzhou,28
 1,shanghai,30
 1,shenzhen,2
 2,beijing,10
 3,shangyu,5
 3,shaoxing,10
+{% endhighlight sql %}
 
-2. 新建一张表并加载数据:
-
+### 新建一张表并加载数据:
 {% highlight bash sql %}
 CREATE TABLE test_row_number(id int,city STRING,num int)
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' ;
 LOAD DATA LOCAL INPATH '/home/bmw/raw_number' OVERWRITE INTO TABLE test_row_number;
 {% endhighlight sql %}
 
-3. 进行去重
+### 进行去重
 
 {% highlight bash sql %}
 select t.id, t.city, t.num
@@ -41,7 +42,6 @@ from(
     from test_row_number
 ) t
 where t.rownumber = 1
-{% endhighlight sql %}
 
 +-----+-----------+------+--+
 | id  |   city    | num  |
@@ -51,8 +51,9 @@ where t.rownumber = 1
 | 3   | shaoxing  | 10   |
 +-----+-----------+------+--+
 3 rows selected (0.478 seconds)
+{% endhighlight sql %}
 
-4. 说明
+### 说明
 
 * 其中distribute by id 表示以id进行分区, sort by num desc 以num进行倒序进行排序(当然可以改成asc来获取最小的一个), t.rownumber = 1表示只取最大的一个。
 
