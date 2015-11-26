@@ -10,7 +10,7 @@ tags: Hive Mongo-Hadoop
 ## 场景
 
 * 使用Mongo-Hadoop对Mongo的Product进行映射, 在进行查询的时候发现出现很多NULL, 查询productid发现出现字段的错位。
-* 原来productname这个字段里面的名字存在"\r\n", 而Hive默认的line delimiter 是"\n", 因此当读到productname时候就以为是多行而进行切分.
+* 原来productname这个字段里面存在"\r\n", 而Hive默认的line delimiter 是"\n", 因此当读到productname时候就以为是多行而进行切分.
 
 那么是否可以修改Hive line delimiter为其他的字符呢?
 
@@ -25,15 +25,15 @@ row_format
 SERDE serde_name [WITH SERDEPROPERTIES (property_name=property_value, property_name=property_value, ...)]
 {% endhighlight java %}
 
-但是 实际上FIELDS TERMINATED, OLLECTION ITEMS TERMINATED, MAP KEYS TERMINATED都可以进行修改, 唯独LINES TERMINATED 没法修改, 当试图修改LINES TERMINATED时候会报错
+但是 实际上FIELDS TERMINATED, COLLECTION ITEMS TERMINATED, MAP KEYS TERMINATED都可以进行修改, 唯独LINES TERMINATED 没法修改, 当试图修改LINES TERMINATED时候会报错
 {% highlight bash java %}
 Error: Error while compiling statement: FAILED: SemanticException 1:762 LINES TERMINATED BY only supports newline '\n' right now. Error encountered near token ''\u0007'' (state=42000,code=40000)
 {% endhighlight java %}
 
 由此可见Hive代码里面是禁止修改的。
-可以查看Hive Jira:
-https://issues.apache.org/jira/browse/HIVE-5999
-https://issues.apache.org/jira/browse/HIVE-11996
+可以查看Hive JIRA:
+* https://issues.apache.org/jira/browse/HIVE-5999
+* https://issues.apache.org/jira/browse/HIVE-11996
 
 目前该问题提了好多年了, 但是Hive并没有有效的解决方案, 主要原因是:
 
