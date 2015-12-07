@@ -8,14 +8,15 @@ tags: 推荐系统 Python Crab
 # 推荐系统入门之Crab源码阅读(一)
 
 ## 前言
-最近需要搞一下推荐系统, 正好一直以来都对推荐算法比较感兴趣。那么怎么进行入门呢, 从阅读开源的推荐系统开始是个不错的方法.
+最近需要搞一下推荐系统, 正好一直以来都对推荐算法比较感兴趣。那么怎么入门呢, 从阅读开源的推荐系统开始是个不错的方法.
 Crab是一个轻量级的推荐算法库, 使用python写成, 代码比较简洁易读, 正好通过学习它来对推荐系统有个初步的了解。Crab 实现了item和user的协同过滤, 项目地址https://github.com/muricoca/crab, 不过目前该项目已经不再更新维护。
 
 * Recommender Algorithms: User-Based Filtering and Item-Based Filtering
 * Work in progress: Slope One, SVD, Evaluation of Recommenders.
 * Planed: Sparse Matrices, REST API’s.
 
-关于Crab的源码学习将分为两篇,
+关于Crab的源码学习将分为两篇:
+
 * 第一篇简单介绍推荐算法和基于Item-Based的协同过滤算法
 * 第二篇将介绍基于User-Based的协同过滤算法以及源码的其他内容。
 
@@ -39,7 +40,6 @@ Crab是一个轻量级的推荐算法库, 使用python写成, 代码比较简洁
 ### 基于用户的推荐（User-based Recommendation）
 基于用户对物品的偏好找到相邻邻居用户，然后将邻居用户喜欢的推荐给当前用户。计算上，就是将一个用户对所有物品的偏好作为一个向量来计算用户之间的相似度，找到 K 邻居后，根据邻居的相似度权重以及他们对物品的偏好，预测当前用户没有偏好的未涉及物品，计算得到一个排序的物品列表作为推荐。图1 给出了一个例子，对于用户 A，根据用户的历史偏好，这里只计算得到一个邻居 - 用户 C，然后将用户 C 喜欢的物品 D 推荐给用户 A。
 
-图1 基于用户推荐的基本原理
 ![img](../image/usercf.gif)
 
 ### 基于项目的推荐（Item-based Recommendation）
@@ -176,8 +176,10 @@ def PreferencesFromUser(self, userID, orderByID=True):
 由此可见, DictDataModel主要负责构建基于user的Item向量 和 基于Item的user向量, 分别为User-Based和Item-based计算用户和物品的相似度。
 ### 找到相似的用户或物品
 找到相似的用户或物品分为两步:
+
 * 计算相似度: simillarity = ItemSimilarity(model, sim_euclidian)
-* 获取邻居策略: strategy = PreferredItemsNeighborhoodStrategy()
+* 获取可能邻居策略: strategy = PreferredItemsNeighborhoodStrategy()
+
 #### 计算相似度
 Item-based CF的similarity是由ItemSimilarity类实现的, 他主要用到两个方法。
 {% highlight python linenos %}
@@ -198,7 +200,7 @@ def getSimilarities(self, vec):
             for other in self.model.ItemIDs()]
 {% endhighlight python %}
 
-* 需要注意的是, 通过PreferencesForItem获取的user向量, 由于存放的是有打分过的user, 所以多个item之间的向量长度以及user对应的值是不同的, 会只取都存在两个向量内的user。
+* 需要注意的是, 通过PreferencesForItem获取的user向量, 由于只存放有打分过的user(不打分的user缺省), 所以多个item之间的向量长度以及user对应的值是不同的, 因此计算时只取都存在两个向量内的user。
 如sum_of_squares = sum([pow(vector1[item] - vector2[item], 2.0) for item in vector1 if item in vector2])
 
 相似度的求法很多
@@ -254,7 +256,7 @@ class PreferredItemsNeighborhoodStrategy(CandidateItemsStrategy):
 {% endhighlight python %}
 方法很简单, 它假设:
 
-* 如果User-B对应的Items包含了User-A的某个Item, 那么User-B就是User-A的邻居, 而User-B有而User-A没有的item就有可能是User-A的item的邻居。这样就减少了User-A邻居的范围, 不需要对所有item计算相似度。
+* 如果User-B对应的Items包含了User-A的某个Item, 那么User-B就是User-A的邻居, 那么User-B有而User-A没有的item就有可能是User-A的item的相似item。这样就减少了User-A推荐范围, 不需要对所有item计算相似度。
 * 我们反过来想, 之前Item-Based CF的协同过滤算法中提到, 计算item的相似度只要计算item对应的User向量的相似度就行, 如果两个item间没有user重合, 那么肯定不可能是相似的.
 
 ### 计算推荐
@@ -303,7 +305,7 @@ def mostSimilarItems(self, itemIDs, howMany, rescorer=None):
             self.estimateMultiItemsPreference, self.similarity, rescorer)
 {% endhighlight python %}
 
-多个item同时相似的item:
+多个item与某个item计算相似度
 {% highlight python linenos %}
 def estimateMultiItemsPreference(self, **args):
     toItemIDs = args.get('thingID', None)
@@ -328,7 +330,7 @@ def estimateMultiItemsPreference(self, **args):
 
 ### 测试验证
 
-运行以上demo, 找出item 1 最相似的 10个 item 为 ['1627', '1628', '1507', '1504', '1616', '1549', '1554', '1123', '1238', '1484']
+运行以上demo, 找出item '1' 最相似的 10个 item 为 ['1627', '1628', '1507', '1504', '1616', '1549', '1554', '1123', '1238', '1484']
 
 运行一下代码查看电影名
 {% highlight python linenos %}
@@ -358,6 +360,7 @@ movie_id	movie_title
 本文主要简单介绍了推荐系统的一些概念, 以及结合Crab源码简单介绍了基于Item-Based的协同过滤实现。
 
 引用:
+
 http://www.ibm.com/developerworks/cn/web/1103_zhaoct_recommstudy1/
 http://www.ibm.com/developerworks/cn/web/1103_zhaoct_recommstudy2/
 
