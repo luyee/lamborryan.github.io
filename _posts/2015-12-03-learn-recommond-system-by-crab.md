@@ -344,16 +344,16 @@ df_items[df_items['movie_id'].isin(['1627', '1628', '1507', '1504', '1616', '154
 movie_id       movie_title
 0        1  Toy Story (1995)
 movie_id	movie_title
-1122	1123	Last Time I Saw Paris, The (1954)
-1237	1238	Full Speed (1996)
-1483	1484	Jerky Boys, The (1994)
-1503	1504	Bewegte Mann, Der (1994)
-1506	1507	Three Lives and Only One Death (1996)
-1548	1549	Dream Man (1995)
-1553	1554	Safe Passage (1994)
-1615	1616	Desert Winds (1995)
-1626	1627	Wife, The (1995)
-1627	1628	Lamerica (1994)
+1123	Last Time I Saw Paris, The (1954)
+1238	Full Speed (1996)
+1484	Jerky Boys, The (1994)
+1504	Bewegte Mann, Der (1994)
+1507	Three Lives and Only One Death (1996)
+1549	Dream Man (1995)
+1554	Safe Passage (1994)
+1616	Desert Winds (1995)
+1627	Wife, The (1995)
+1628	Lamerica (1994)
 {% endhighlight python %}
 
 ## 总结
