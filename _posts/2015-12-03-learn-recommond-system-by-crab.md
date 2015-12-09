@@ -15,10 +15,11 @@ Crab是一个轻量级的推荐算法库, 使用python写成, 代码比较简洁
 * Work in progress: Slope One, SVD, Evaluation of Recommenders.
 * Planed: Sparse Matrices, REST API’s.
 
-关于Crab的源码学习将分为两篇:
+关于Crab的源码学习将分为三篇:
 
 * 第一篇简单介绍推荐算法和基于Item-Based的协同过滤算法
-* 第二篇将介绍基于User-Based的协同过滤算法以及源码的其他内容。
+* 第二篇将介绍基于User-Based的协同过滤算法。
+* 第三篇将介绍基于SlopeOne的推荐算法。
 
 ## 推荐系统简介
 
@@ -261,8 +262,10 @@ class PreferredItemsNeighborhoodStrategy(CandidateItemsStrategy):
 
 ### 计算推荐
 在Crab内有三种推荐方式分别是:ItemRecommender, UserRecommender, SlopeOneRecommender, 本文只介绍ItemRecommender, 其他两种将在下文介绍.
+ItemRecommender 有两种用法:
 
-ItemRecommender 有两种用法, 1: 推荐user相似item, 2: 推荐item的相似items
+1. 推荐user相似item
+2. 推荐item的相似items
 
 #### 推荐user相似item
 该场景是根据user A的历史习惯, 推荐user A没有的其他item:
