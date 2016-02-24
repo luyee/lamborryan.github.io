@@ -265,7 +265,7 @@ alter 'test', {NAME=>'f', METHOD=>'delete'}
 {% highlight bash linenos %}
 enable 'test'
 {% endhighlight bash %}
-#### enable表后，HBase表的压缩格式并没有生效，还需要一个动作，即HBase major_compact
+enable表后，HBase表的压缩格式并没有生效，还需要一个动作，即HBase major_compact
 {% highlight bash linenos %}
 major_compact 'test'
 {% endhighlight bash %}
