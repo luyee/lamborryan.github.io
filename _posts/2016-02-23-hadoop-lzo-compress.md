@@ -247,12 +247,12 @@ java.io.IOException: Compression algorithm 'lzo' previously failed test.
 * create 'test', {NAME=>'cf', COMPRESSION=>'lzo'}
 
 ### 对已有表设置压缩
-* hbase shell命令下，disable相关表：
+#### hbase shell命令下，disable相关表：
 {% highlight bash linenos %}
 disable 'test'
 {% endhighlight bash %}
 实际产品环境中，’test’表可能很大，例如上几十T的数据，disable过程会比较缓慢，需要等待较长时间。disable过程可以通过查看hbase master log日志监控。
-* 修改表的压缩格式
+#### 修改表的压缩格式
 {% highlight bash linenos %}
 alter 'test', NAME => 'f', COMPRESSION => 'snappy'
 {% endhighlight bash %}
@@ -261,11 +261,11 @@ NAME即column family，列族。HBase修改压缩格式，需要一个列族一�
 alter 'test', {NAME=>'f', METHOD=>'delete'}
 {% endhighlight bash %}
 同样提醒，别删错列族，否则麻烦又大了~
-* 重新enable表
+#### 重新enable表
 {% highlight bash linenos %}
 enable 'test'
 {% endhighlight bash %}
-* enable表后，HBase表的压缩格式并没有生效，还需要一个动作，即HBase major_compact
+#### enable表后，HBase表的压缩格式并没有生效，还需要一个动作，即HBase major_compact
 {% highlight bash linenos %}
 major_compact 'test'
 {% endhighlight bash %}
