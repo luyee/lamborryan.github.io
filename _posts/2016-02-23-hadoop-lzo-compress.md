@@ -272,6 +272,9 @@ major_compact 'test'
 该动作耗时较长，会对服务有很大影响，可以选择在一个服务不忙的时间来做。
 
 describe一下该表，可以看到HBase 表压缩格式修改完毕。
+
+## 引用
+
 1. https://cwiki.apache.org/confluence/display/Hive/LanguageManual+LZO
 2.  http://blog.csdn.net/lalaguozhe/article/details/10912527?utm_source=tuicool&utm_medium=referral
 3. http://www.iteblog.com/archives/992
