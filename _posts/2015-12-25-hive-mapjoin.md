@@ -11,11 +11,11 @@ tags: Hive
 ## 前言
 
 在使用hive过程, 经常会碰到以下错误日志:
-```java
+``` java
 return code 3 from org.apache.hadoop.hive.ql.exec.mr.MapredLocalTask
 ```
 当出现这个错误的时候,多半跟OOM有关了,而为啥出现OOM了多半跟join有关。我们以以下这个SQL来说明Hive是怎么进行优化的
-``` java
+{% highlight java linenos %}
 SELECT
    dl.deal_id,
    dl.ship_price,
@@ -37,3 +37,4 @@ Left OUTER JOIN dim_shop ds
 ON dl.shop_id = ds.shop_id
 LEFT OUTER JOIN supportedcity sc
 ON ds.city_code == sc.city_code;
+{% endhighlight %}
