@@ -106,6 +106,7 @@ lrwxrwxrwx 1 bmw bmw     26 2月  23 14:00 libgplcompression.so.0 -> libgplcompr
 {% endhighlight xml %}
 * 其中mapred-site中设置mapred.child.env的​LD_LIBRARY_PATH很重要，因为hadoop-lzo通过JNI调用(java.library.path)​libgplcompression.so，然后libgplcompression.so​再通过dlopen这个系统调用（其实是查找系统环境变量LD_LIBRARY_PATH​）来加载liblzo2.so​。container在启动的时候，需要设置LD_LIBRARY_PATH​环境变量，来让LzoCodec加载​native-lzo library，如果不设置的话，会在container的syslog中报下面的错误​​
 经过以上配置后，HDFS和MapReduce已经可以支持lzo压缩。 lzo压缩后后缀名为lzo_deflate。
+
 ## Hive支持压缩
 修改hive-site.xml, 实现默认压缩， 经过这样配置后通过hive生成的最终文件或者中间文件都会被压缩，关于读取hive会根据文件的后缀名自动识别是否进行解压。
 {% highlight xml linenos %}
@@ -247,7 +248,7 @@ java.io.IOException: Compression algorithm 'lzo' previously failed test.
 * create 'test', {NAME=>'cf', COMPRESSION=>'lzo'}
 
 ### 对已有表设置压缩
-#### hbase shell命令下，disable相关表：
+#### disable相关表
 {% highlight bash linenos %}
 disable 'test'
 {% endhighlight bash %}
