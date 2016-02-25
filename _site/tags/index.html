@@ -9,6 +9,26 @@
     <link rel="stylesheet" href="/media/css/style.css" />
     <link rel="stylesheet" href="/media/css/highlight.css" media="all"/>
     <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+    <style media="screen">
+      #ds-reset .ds-avatar img {
+        width: 54px !important;
+        height: 54px !important;
+        -webkit-border-radius: 27px !important;
+        -moz-border-radius: 27px !important;
+        border-radius: 27px !important;
+        -webkit-transition: -webkit-transform 0.4s ease-out;
+        -moz-transition: -moz-transform 0.4s ease-out;
+        transition: transform 0.4s ease-out;
+      }
+      #ds-reset .ds-avatar img:hover {
+        -webkit-transform: rotateZ(360deg);
+        -moz-transform: rotateZ(360deg);
+        transform: rotateZ(360deg);
+      }
+      #ds-reset .ds-powered-by {
+        display: none;
+      }
+    </style>
   </head>
   <body>
     <div id="container">
@@ -31,17 +51,23 @@
 
 <a href="#Python" title="Python" rel="2">Python</a>
 
-<a href="#Hive" title="Hive" rel="7">Hive</a>
+<a href="#Hive" title="Hive" rel="8">Hive</a>
 
-<a href="#Spark" title="Spark" rel="3">Spark</a>
+<a href="#Spark" title="Spark" rel="4">Spark</a>
 
 <a href="#Mongo-Hadoop" title="Mongo-Hadoop" rel="3">Mongo-Hadoop</a>
-
-<a href="#SparkSQL" title="SparkSQL" rel="1">SparkSQL</a>
 
 <a href="#推荐系统" title="推荐系统" rel="1">推荐系统</a>
 
 <a href="#Crab" title="Crab" rel="1">Crab</a>
+
+<a href="#Hadoop" title="Hadoop" rel="1">Hadoop</a>
+
+<a href="#Hbase" title="Hbase" rel="1">Hbase</a>
+
+<a href="#Sqoop" title="Sqoop" rel="1">Sqoop</a>
+
+<a href="#大数据基础" title="大数据基础" rel="1">大数据基础</a>
 
 </div>
 
@@ -64,6 +90,11 @@
 
 
   <li class="listing-seperator" id="Hive">Hive</li>
+
+  <li class="listing-item">
+  <time datetime="2016-02-24">2016-02-24</time>
+  <a href="/hadoop-lzo-compress/" title="Hadoop 之 LZO Compress 配置安装">Hadoop 之 LZO Compress 配置安装</a>
+  </li>
 
   <li class="listing-item">
   <time datetime="2015-11-26">2015-11-26</time>
@@ -104,8 +135,13 @@
   <li class="listing-seperator" id="Spark">Spark</li>
 
   <li class="listing-item">
+  <time datetime="2016-02-24">2016-02-24</time>
+  <a href="/hadoop-lzo-compress/" title="Hadoop 之 LZO Compress 配置安装">Hadoop 之 LZO Compress 配置安装</a>
+  </li>
+
+  <li class="listing-item">
   <time datetime="2015-12-08">2015-12-08</time>
-  <a href="/spark-java-io-notserializableexception/" title="SparkTask未序列化(Tasknotserializable)问题分析">SparkTask未序列化(Tasknotserializable)问题分析</a>
+  <a href="/spark-java.io.NotSerializableException/" title="SparkTask未序列化(Tasknotserializable)问题分析">SparkTask未序列化(Tasknotserializable)问题分析</a>
   </li>
 
   <li class="listing-item">
@@ -137,14 +173,6 @@
   </li>
 
 
-  <li class="listing-seperator" id="SparkSQL">SparkSQL</li>
-
-  <li class="listing-item">
-  <time datetime="2015-11-26">2015-11-26</time>
-  <a href="/spark-sql-dataframe-api-example/" title="SparkSQL DataFrame Used Examples">SparkSQL DataFrame Used Examples</a>
-  </li>
-
-
   <li class="listing-seperator" id="推荐系统">推荐系统</li>
 
   <li class="listing-item">
@@ -158,6 +186,38 @@
   <li class="listing-item">
   <time datetime="2015-12-04">2015-12-04</time>
   <a href="/learn-recommond-system-by-crab/" title="推荐系统入门之Crab源码阅读(一)">推荐系统入门之Crab源码阅读(一)</a>
+  </li>
+
+
+  <li class="listing-seperator" id="Hadoop">Hadoop</li>
+
+  <li class="listing-item">
+  <time datetime="2016-02-24">2016-02-24</time>
+  <a href="/hadoop-lzo-compress/" title="Hadoop 之 LZO Compress 配置安装">Hadoop 之 LZO Compress 配置安装</a>
+  </li>
+
+
+  <li class="listing-seperator" id="Hbase">Hbase</li>
+
+  <li class="listing-item">
+  <time datetime="2016-02-24">2016-02-24</time>
+  <a href="/hadoop-lzo-compress/" title="Hadoop 之 LZO Compress 配置安装">Hadoop 之 LZO Compress 配置安装</a>
+  </li>
+
+
+  <li class="listing-seperator" id="Sqoop">Sqoop</li>
+
+  <li class="listing-item">
+  <time datetime="2016-02-24">2016-02-24</time>
+  <a href="/hadoop-lzo-compress/" title="Hadoop 之 LZO Compress 配置安装">Hadoop 之 LZO Compress 配置安装</a>
+  </li>
+
+
+  <li class="listing-seperator" id="大数据基础">大数据基础</li>
+
+  <li class="listing-item">
+  <time datetime="2016-02-24">2016-02-24</time>
+  <a href="/bigdata-split-and-route/" title="大数据基础之数据的与路由">大数据基础之数据的与路由</a>
   </li>
 
 
@@ -185,14 +245,12 @@ $(function () {
 
 </section>
 
-
-
         </article>
       </div>
 
       <footer>
         <p><small>
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2004 - 2015 <a href="/about/">追风的蓝宝</a>
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2004 - 2016 <a href="/about/">追风的蓝宝</a>
         </small></p>
       </footer>
 

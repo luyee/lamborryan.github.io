@@ -9,6 +9,26 @@
     <link rel="stylesheet" href="/media/css/style.css" />
     <link rel="stylesheet" href="/media/css/highlight.css" media="all"/>
     <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+    <style media="screen">
+      #ds-reset .ds-avatar img {
+        width: 54px !important;
+        height: 54px !important;
+        -webkit-border-radius: 27px !important;
+        -moz-border-radius: 27px !important;
+        border-radius: 27px !important;
+        -webkit-transition: -webkit-transform 0.4s ease-out;
+        -moz-transition: -moz-transform 0.4s ease-out;
+        transition: transform 0.4s ease-out;
+      }
+      #ds-reset .ds-avatar img:hover {
+        -webkit-transform: rotateZ(360deg);
+        -moz-transform: rotateZ(360deg);
+        transform: rotateZ(360deg);
+      }
+      #ds-reset .ds-powered-by {
+        display: none;
+      }
+    </style>
   </head>
   <body>
     <div id="container">
@@ -31,7 +51,7 @@
 
 <a href="#编程语言" title="编程语言" rel="1">编程语言 (1)</a>
 
-<a href="#大数据" title="大数据" rel="11">大数据 (11)</a>
+<a href="#大数据" title="大数据" rel="12">大数据 (12)</a>
 
 <a href="#算法" title="算法" rel="1">算法 (1)</a>
 
@@ -53,13 +73,18 @@
   <li class="listing-seperator" id="大数据">大数据</li>
 
   <li class="listing-item">
-  <time datetime="2015-12-08">2015-12-08</time>
-  <a href="/spark-java-io-notserializableexception/" title="SparkTask未序列化(Tasknotserializable)问题分析">SparkTask未序列化(Tasknotserializable)问题分析</a>
+  <time datetime="2016-02-24">2016-02-24</time>
+  <a href="/bigdata-split-and-route/" title="大数据基础之数据的与路由">大数据基础之数据的与路由</a>
   </li>
 
   <li class="listing-item">
-  <time datetime="2015-11-26">2015-11-26</time>
-  <a href="/spark-sql-dataframe-api-example/" title="SparkSQL DataFrame Used Examples">SparkSQL DataFrame Used Examples</a>
+  <time datetime="2016-02-24">2016-02-24</time>
+  <a href="/hadoop-lzo-compress/" title="Hadoop 之 LZO Compress 配置安装">Hadoop 之 LZO Compress 配置安装</a>
+  </li>
+
+  <li class="listing-item">
+  <time datetime="2015-12-08">2015-12-08</time>
+  <a href="/spark-java.io.NotSerializableException/" title="SparkTask未序列化(Tasknotserializable)问题分析">SparkTask未序列化(Tasknotserializable)问题分析</a>
   </li>
 
   <li class="listing-item">
@@ -140,14 +165,12 @@ $(function () {
 
 </section>
 
-
-
         </article>
       </div>
 
       <footer>
         <p><small>
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2004 - 2015 <a href="/about/">追风的蓝宝</a>
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2004 - 2016 <a href="/about/">追风的蓝宝</a>
         </small></p>
       </footer>
 

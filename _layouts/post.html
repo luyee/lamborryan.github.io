@@ -6,7 +6,7 @@ layout: default
     <time datetime="{{ page.date | date:"%Y-%m-%d" }}">{{ page.date | date:"%Y-%m-%d" }}</time>
   </span>
   {% if page.categories.size != 0 %}
-  | 
+  |
   <span class="categories">
     分类
     {% for cat in page.categories %}
@@ -15,7 +15,7 @@ layout: default
   </span>
   {% endif %}
   {% if page.tags.size != 0 %}
-  | 
+  |
   <span class="tags">
     标签
     {% for tag in page.tags %}
@@ -35,4 +35,14 @@ layout: default
     <a {% if page.next %} href="{{ page.next.url }}" class="pageNav"{% endif %} {% unless page.next %} class="pageNavInvalid" {% endunless %} >下一篇</a>
   </span>
 </section>
-{% include comments.md %}
+<div id="ds-thread" class="ds-thread" data-url="{{ page.url }}" data-title="{{ page.title }}" data-thread-key="{{ page.title }}"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name: 'lamborryan'};
+(function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = 'http://static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+})();
+</script>

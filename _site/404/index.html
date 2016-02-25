@@ -9,6 +9,26 @@
     <link rel="stylesheet" href="/media/css/style.css" />
     <link rel="stylesheet" href="/media/css/highlight.css" media="all"/>
     <script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+    <style media="screen">
+      #ds-reset .ds-avatar img {
+        width: 54px !important;
+        height: 54px !important;
+        -webkit-border-radius: 27px !important;
+        -moz-border-radius: 27px !important;
+        border-radius: 27px !important;
+        -webkit-transition: -webkit-transform 0.4s ease-out;
+        -moz-transition: -moz-transform 0.4s ease-out;
+        transition: transform 0.4s ease-out;
+      }
+      #ds-reset .ds-avatar img:hover {
+        -webkit-transform: rotateZ(360deg);
+        -moz-transform: rotateZ(360deg);
+        transform: rotateZ(360deg);
+      }
+      #ds-reset .ds-powered-by {
+        display: none;
+      }
+    </style>
   </head>
   <body>
     <div id="container">
@@ -30,7 +50,7 @@
   <script>
 	var posts =
 	{
-		             
+		              
 	};
 
 	var path = location.pathname;
@@ -50,14 +70,12 @@
 
 </section>
 
-
-
         </article>
       </div>
 
       <footer>
         <p><small>
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2004 - 2015 <a href="/about/">追风的蓝宝</a>
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/cn/" target="_blank" title="许可协议">©</a> 2004 - 2016 <a href="/about/">追风的蓝宝</a>
         </small></p>
       </footer>
 

@@ -1,8 +1,13 @@
 markdown: rdiscount
 permalink: /:title/
 url: http://lamborryan.github.io
-#highlighter: pygments
-pygments: true
+highlighter: pygments
+gems:
+    - jekyll-paginate
+
+paginate: 5
+paginate_path: "/page/:num"
+
 name: 追风的蓝宝
 description: 追风的蓝宝 | keep learning.
 author: 追风的蓝宝
