@@ -492,7 +492,7 @@ com.hadoop.compression.lzo.LzoIndexer  \
 &amp;lt;/property&amp;gt;
 &amp;lt;property&amp;gt;
     &amp;lt;name&amp;gt;io.compression.codec.lzo.class&amp;lt;/name&amp;gt;
-    &amp;lt;value&amp;gt;com.hadoop.compression.lzo.LzoCodec&amp;lt;/value&amp;gt;
+    &amp;lt;value&amp;gt;com.hadoop.compression.lzo.LzopCodec&amp;lt;/value&amp;gt;
 &amp;lt;/property&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -504,7 +504,7 @@ com.hadoop.compression.lzo.LzoIndexer  \
 &amp;lt;/property&amp;gt;
 &amp;lt;property&amp;gt;
     &amp;lt;name&amp;gt;mapred.map.output.compression.codec&amp;lt;/name&amp;gt;
-    &amp;lt;value&amp;gt;com.hadoop.compression.lzo.LzoCodec&amp;lt;/value&amp;gt;
+    &amp;lt;value&amp;gt;com.hadoop.compression.lzo.LzopCodec&amp;lt;/value&amp;gt;
 &amp;lt;/property&amp;gt;
 &amp;lt;property&amp;gt;
     &amp;lt;name&amp;gt;mapred.child.env&amp;lt;/name&amp;gt;
@@ -516,7 +516,7 @@ com.hadoop.compression.lzo.LzoIndexer  \
 
 &lt;pre&gt;&lt;code class=&quot;xml&quot;&gt;&amp;lt;property&amp;gt;
   &amp;lt;name&amp;gt;mapreduce.output.fileoutputformat.compress.codec&amp;lt;/name&amp;gt;
-  &amp;lt;value&amp;gt;com.hadoop.compression.lzo.LzoCodec&amp;lt;/value&amp;gt;
+  &amp;lt;value&amp;gt;com.hadoop.compression.lzo.LzopCodec&amp;lt;/value&amp;gt;
 &amp;lt;/property&amp;gt;
 &amp;lt;property&amp;gt;
   &amp;lt;name&amp;gt;hive.exec.compress.output&amp;lt;/name&amp;gt;

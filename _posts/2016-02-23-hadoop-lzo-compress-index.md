@@ -52,7 +52,7 @@ com.hadoop.compression.lzo.LzoIndexer  \
 </property>
 <property>
     <name>io.compression.codec.lzo.class</name>
-    <value>com.hadoop.compression.lzo.LzoCodec</value>
+    <value>com.hadoop.compression.lzo.LzopCodec</value>
 </property>
 ```
 
@@ -65,7 +65,7 @@ com.hadoop.compression.lzo.LzoIndexer  \
 </property>
 <property>
     <name>mapred.map.output.compression.codec</name>
-    <value>com.hadoop.compression.lzo.LzoCodec</value>
+    <value>com.hadoop.compression.lzo.LzopCodec</value>
 </property>
 <property>
     <name>mapred.child.env</name>
@@ -78,7 +78,7 @@ com.hadoop.compression.lzo.LzoIndexer  \
 ``` xml
 <property>
   <name>mapreduce.output.fileoutputformat.compress.codec</name>
-  <value>com.hadoop.compression.lzo.LzoCodec</value>
+  <value>com.hadoop.compression.lzo.LzopCodec</value>
 </property>
 <property>
   <name>hive.exec.compress.output</name>
