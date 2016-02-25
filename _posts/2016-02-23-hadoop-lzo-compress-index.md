@@ -194,6 +194,7 @@ OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat';
 ```
 
 这里普及下InputFormat河SerDe的区别：
+
 * 调用InputFormat，将文件切成不同的文档。每篇文档即一行(Row)。
 * 调用SerDe的Deserializer，将一行(Row)，切分为各个字段。
 
@@ -216,5 +217,7 @@ $HADOOP_HOMOE/share/hadoop/tools/lib/hadoop-streaming-2.2.0.jar \
 
 ## 总结
 本文主要介绍了hadoop及其组件在使用LZO压缩中碰到的坑, 以及如何对LZO文件建立索引以及保证数据的准确性。
+
+> 最后还有个待解决的问题, 似乎sqoop export 不能支持具有索引的lzo文件的导出, 即不能过滤index。
 
 本文完
