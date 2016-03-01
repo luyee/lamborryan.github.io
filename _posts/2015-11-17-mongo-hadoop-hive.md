@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hive数据仓库之在mongo上进行hsql查询
+title: Hive数据仓库之mongo-hadoop的使用
 date: 2015-11-17 12:29:30
 categories: 大数据
 tags: Hive Mongo-Hadoop
@@ -37,7 +37,8 @@ tags: Hive Mongo-Hadoop
 
 ### Hive table
 创建Hive表使加入对mongo的url:
-{% highlight bash sql %}
+
+``` sql
 CREATE EXTERNAL TABLE IF NOT EXISTS Product(
     product_id STRUCT<oid:STRING,bsontype:INT>,
     shopId STRUCT<oid:STRING,bsontype:INT>,
@@ -66,7 +67,7 @@ WITH SERDEPROPERTIES('mongo.columns.mapping'='{"product_id":"_id","shopId":"shop
     "productLimitCount":"productLimitCount","statusChangeTime":"statusChangeTime","offlineReason":"offlineReason",
     "seller":"seller","sellerId":"sellerId"}')
 TBLPROPERTIES("mongo.properties.path"="${hivevar:properties_root}/product.properties");
-{% endhighlight sql %}
+```
 
 上述是Hive的建表语句:
 
@@ -96,6 +97,44 @@ Spark 已经支持兼容了Hive, 虽然并没有完全兼容。
 15/11/19 17:23:15 WARN BSONSerDe: SWEET ------ structName is oid
 15/11/19 17:23:15 WARN BSONSerDe: SWEET ------ structName is bsontype
 
+### Hive write to mongo
+
+首先你得有mongo的write的权限.
+
+其次, 不要建external表
+
+``` sql
+CREATE TABLE IF NOT EXISTS UserCollect(
+    userId BIGINT,
+    items ARRAY<STRUCT<templateId:STRING,skuId:STRING,count:INT,buyTime:BIGINT>>)
+STORED BY 'com.mongodb.hadoop.hive.MongoStorageHandler'
+WITH SERDEPROPERTIES('mongo.columns.mapping'='{"userId":"userId","items.templateId":"items.templateId","items.skuId":"items.skuId","items.count":"items.count","items.buyTime":"items.buyTime"}')
+TBLPROPERTIES("mongo.properties.path"="${hivevar:properties_root}/usercollect.properties");
+```
+
+insert into table  和 insert into overwrite table 在这里效果是一样的
+
+``` sql
+INSERT INTO TABLE xml_meta_mongo.UserCollect
+SELECT
+customId AS userId,
+collect_list(
+    NAMED_STRUCT (
+        "templateId", templateId,
+        "skuId", skuId,
+        "count", count,
+        "buyTime", buyTime
+    )
+) AS items
+FROM st
+```
+
+如果需要_id, 则需要在mongodb创建表是设置好
+
+``` sql
+db.createCollection("UserCollect", {autoIndexId:true})
+```
+
 
 ### 注意事项
 
@@ -104,7 +143,7 @@ Spark 已经支持兼容了Hive, 虽然并没有完全兼容。
 mongo-hadoop之所以能运行mapreduce或者spark的应用, 是因为mongo提供了一个split功能，正是由于这个功能的存在才能进行任务的划分。但是mongo的split功能的权限非常高,
 如果我用只读的账户去进行之前的建表行为就会出现以下错误:
 
-{% highlight bash xml %}
+``` java
 14/05/02 13:17:01 ERROR util.MongoTool: Exception while executing job...
 java.io.IOException: com.mongodb.hadoop.splitter.SplitFailedException: Unable to calculate input splits: need to login
 at com.mongodb.hadoop.MongoInputFormat.getSplits(MongoInputFormat.java:53)
@@ -112,7 +151,7 @@ at org.apache.hadoop.mapreduce.JobSubmitter.writeNewSplits(JobSubmitter.java:493
 at org.apache.hadoop.mapreduce.JobSubmitter.writeSplits(JobSubmitter.java:510)
 at org.apache.hadoop.mapreduce.JobSubmitter.submitJobInternal(JobSubmitter.java:394)
 at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1295)
-{% endhighlight xml %}
+```
 
 * This is because the connector needs to run the MongoDB-internal splitVector DB command, under the covers, to work out how to split the MongoDB data up into sections ready to distribute across the Hadoop Cluster. However, by default, you are unlikely to have given sufficient privileges to the user, used by the connector, to allow this DB command to be run. This issue can be simulated easily by opening a mongo shell against the database, authenticating with your username and password and then running the splitVector command manually.
 
@@ -121,7 +160,9 @@ at org.apache.hadoop.mapreduce.Job$10.run(Job.java:1295)
 从上面两段话可以看出需要clusterManager role 才能进行split
 
 文章来自
+
 http://pauldone.blogspot.com/2014/05/mongodb-connector-authentication.html
+
 https://github.com/mongodb/mongo-hadoop/wiki/Usage-with-Authentication
 
 #### 删除drop table
@@ -130,7 +171,9 @@ https://github.com/mongodb/mongo-hadoop/wiki/Usage-with-Authentication
 
 * If the table created is EXTERNAL, when the table is dropped only its metadata is deleted; the underlying MongoDB collection remains intact. On the other hand, if the table is not EXTERNAL, dropping the table deletes both the metadata associated with the table and the underlying MongoDB collection.
 
-来自https://github.com/mongodb/mongo-hadoop/wiki/Hive-Usage
+来自:
+
+https://github.com/mongodb/mongo-hadoop/wiki/Hive-Usage
 
 ## 总结
 
