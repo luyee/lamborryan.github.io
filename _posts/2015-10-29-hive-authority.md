@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Hive权限操作
+title: Hive数据仓库之权限操作
 date: 2015-10-29 00:29:30
 categories: 大数据
 tags: Hive
 ---
-# Hive权限操作
+# Hive数据仓库之权限操作
 
 #一. 简介
 
