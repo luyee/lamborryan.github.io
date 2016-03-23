@@ -302,6 +302,7 @@ private void processRecord(Object convertedRecord, ForkOperator forkOperator, Ro
 * 对record进行task-level row checker, 失败就返回
 * 对每一条数据进行copy,然后将record放入每一个fork的queue里面。由此可见, 要实现fork必须要实现copyable接口，每一个fork保存完整的一份数据在其queue里面。所以当数据量大时且fork多时很容易出现oom
 * fork等待main branch运行且处理完所有数据后才运行. fork的运行是并行的。
+* 在运行完fork后, task会对每一个fork分支进行task level checker, 如果通过则进行commit。
 
 #### Fork 逻辑
 
