@@ -67,20 +67,21 @@ bin/azkaban-solo-start.sh
 新建job文件gobblin_test.job
 
 ``` bash
-type=hadoopJava
+type=java
 job.class=gobblin.azkaban.AzkabanJobLauncher
 classpath=/data/bmw/services/gobblin/gobblin/lib/*
 ENV.JOB_PROP_FILE=hdfs_standalone_txt_test.pull
 method.run=run
 method.cancel=cancel
 ```
+> 虽然官方文档中说JobType要设置为hadoopJava, 但是在实际应用中如果设置为hadoopJava, 那么会存在gobblin job会一直运行不会结束的bug, 当我把JobType设置为java后运行正常. 所以本文后续全部使用java jobtype。 bug类似于[这里](https://groups.google.com/forum/#!searchin/gobblin-users/azkaban/gobblin-users/wxegYW_FGbI/1dA-KgpQCQAJ)
 
 从上面的例子可以看出几个要素。
 
-1.配置gobblin的azkaban Job需要设置Job Type为hadoopJava，所以Azkaban会使用jobtype plugin的HadoopJavaJobRunnerMain来启动Gobblin Job。
+1.配置gobblin的azkaban Job需要设置Job Type为java，所以Azkaban会使用jobtype plugin的JavaJobRunnerMain来启动Gobblin Job。
 
 ``` java
-public HadoopJavaJobRunnerMain() throws Exception {
+public JavaJobRunnerMain() throws Exception {
     // 代码省略
     * * *
 
@@ -116,7 +117,7 @@ private void runMethod(Object obj, String runMethod) throws IllegalAccessExcepti
 }
 ```
 
-从代码片段上可以看出Azakan根据hadoopJava配置来决定调用HadoopJavaJobRunnerMain, 而HadoopJavaJobRunnerMain实例化了gobblin.azkaban.AzkabanJobLauncher 并调用其run 方法来launcher gobblin job, 使用canel方法来停止gobblin job。
+从代码片段上可以看出Azakan根据Java配置来决定调用JavaJobRunnerMain, 而JavaJobRunnerMain实例化了gobblin.azkaban.AzkabanJobLauncher 并调用其run 方法来launcher gobblin job, 使用canel方法来停止gobblin job。
 
 AzkabanJobLauncher 的代码片段如下, 其中关于AzkabanJobLauncher的内容超出本文的界限, 在后续文章中详细介绍。
 
@@ -150,10 +151,10 @@ AzkabanJobLauncher 的代码片段如下, 其中关于AzkabanJobLauncher的内�
 
 构造AzkabanJobLauncher实例的时候需要传入gobblin job的运行参数, 这就需要通过环境变量来传递配置文件路径。
 
-下面依然是HadoopJavaJobRunnerMain是代码断
+下面依然是JavaJobRunnerMain是代码断
 
 ```java
-public HadoopJavaJobRunnerMain() throws Exception {
+public JavaJobRunnerMain() throws Exception {
     // 代码省略
     * * *
 
