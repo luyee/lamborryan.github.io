@@ -28,7 +28,7 @@ Gobblin的writer功能还是很强大的, 该Stage负责将record写入临时文
 
 #### PartitionedDataWriter的初始化
 
-Writer流程得从上一篇文章[<Gobblin系列四之Runtime初探>](http://lamborryan.github.io/gobblin-runtime-view/)上谈起。
+Writer流程得从上一篇文章[\<Gobblin系列四之Runtime初探\>](http://lamborryan.github.io/gobblin-runtime-view/)上谈起。
 Writer是在fork.class中processRecords方法通过buildWriterIfNotPresent创建的, 那么我们先从这里开始查看源码。
 
 ``` java
@@ -194,7 +194,7 @@ public abstract class PartitionAwareDataWriterBuilder<S, D> extends DataWriterBu
 
 ```
 
-关于PartitionAwareDataWriterBuilder的介绍请看文档[Partitioned Writers ](https://github.com/linkedin/gobblin/wiki/Partitioned%20Writers) ,结合它来看本文更容易理解。
+关于PartitionAwareDataWriterBuilder的介绍请看文档[\<Partitioned Writers \>](https://github.com/linkedin/gobblin/wiki/Partitioned%20Writers) ,结合它来看本文更容易理解。
 
 
 例如以下的simpleWriterBuilder:

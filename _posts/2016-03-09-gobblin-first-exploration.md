@@ -9,7 +9,7 @@ tags: Gobblin
 
 由于需要从kafka批量把日志dump到hdfs上，所以我们使用了linkin的Gobblin工具。Gobblin目前还处于开发阶段，资料比较少，文档介绍的也不是很详细，要使用他只能去阅读源码。因此我打算通过一系列的Gobblin的文章来记录下我的学习使用心得。
 
-本文主要初步介绍Gobblin的基础框架, 主要内容来自[<官方文档>](https://github.com/linkedin/gobblin/wiki/Gobblin-Architecture)
+本文主要初步介绍Gobblin的基础框架, 主要内容来自[\<官方文档\>](https://github.com/linkedin/gobblin/wiki/Gobblin-Architecture)
 , 然后在后续文章中展开介绍。
 
 本人使用的Gobblin版本是0.6.2

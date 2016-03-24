@@ -3,8 +3,6 @@ permalink: /:title/
 url: http://lamborryan.github.io
 highlighter: rouge
 markdown: kramdown
-kramdown:
-  input: GFM
 gems:
     - jekyll-paginate
 

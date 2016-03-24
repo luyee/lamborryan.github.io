@@ -10,7 +10,7 @@ tags: Hadoop Hive Spark Hbase Sqoop
 ## 前言
 
 随着数据量不停的增加，磁盘空间开始吃紧，这个时候就需要对磁盘上的文件进行压缩，所以花了两天的时间研究了下hadoop及其他组件的压缩特性。对压缩算法进行了初步的筛选, 由于编解码的速度以及需要split, 所以选择了lzo压缩算法，本文主要介绍lzo压缩如何在hadoop集群以及相关组件上进行配置。
-本文是LZO系列的第一篇, 另外一篇为[<Hadoop之LZO Compress深入>](http://lamborryan.github.io/hadoop-lzo-compress-index/)
+本文是LZO系列的第一篇, 另外一篇为[\<Hadoop之LZO Compress深入\>](http://lamborryan.github.io/hadoop-lzo-compress-index/)
 
 ## 安装LZO Native库
 

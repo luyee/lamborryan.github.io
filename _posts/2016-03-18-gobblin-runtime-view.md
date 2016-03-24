@@ -13,11 +13,11 @@ Gobblin有两个重要的包即Gobblin-core和Gobblin-runtime, 前者实现了�
 
 作为Gobblin的内核, Gobblin-runtime实现了Gobblin的工作流程和任务流程。本文名为Runtime初探, 主要研究目的就是通过Gobblin-runtime来了解Gobblin的运行逻辑, 便于后续对Gobblin的灵活开发。
 
-在前文[<Gobblin系列一之初探>](http://lamborryan.github.io/gobblin-first-exploration/)中提到了Gobblin具有工作流和任务流的概念。那么本文就分为工作流和任务流两块来介绍。
+在前文[\<Gobblin系列一之初探\>](http://lamborryan.github.io/gobblin-first-exploration/)中提到了Gobblin具有工作流和任务流的概念。那么本文就分为工作流和任务流两块来介绍。
 
 ## 工作流
 
-所谓工作流就是指gobblin job从启动开始到结束这一个生命周期的工作流程。 这里引用[<Gobblin系列一之初探>](http://lamborryan.github.io/gobblin-first-exploration/) 的图示.
+所谓工作流就是指gobblin job从启动开始到结束这一个生命周期的工作流程。 这里引用[\<Gobblin系列一之初探\>](http://lamborryan.github.io/gobblin-first-exploration/) 的图示.
 
 ![img](../image/gobblin-2.png)
 
@@ -151,7 +151,7 @@ private boolean canCommitDataset(JobState.DatasetState datasetState) {
 
 ## 任务流
 
-同样引用[<Gobblin系列一之初探>](http://lamborryan.github.io/gobblin-first-exploration/)中关于任务流的图示
+同样引用[\<Gobblin系列一之初探\>](http://lamborryan.github.io/gobblin-first-exploration/)中关于任务流的图示
 
 ![img](../image/gobblin-5.png)
 
@@ -418,4 +418,4 @@ public boolean executePolicies(Object record, RowLevelPolicyCheckResults results
 
 ![img](../image/gobblin-6.png)
 
-本文完。
+本文完

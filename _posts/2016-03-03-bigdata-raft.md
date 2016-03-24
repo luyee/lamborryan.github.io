@@ -96,8 +96,8 @@ Raft 协议强依赖 Leader 节点的可用性来确保集群数据的一致性�
 
 本文的内容主要参考以下:
 
-[<Raft为什么是更易理解的分布式一致性算法>](http://blog.csdn.net/mindfloating/article/details/50774564)
+[\<Raft为什么是更易理解的分布式一致性算法\>](http://blog.csdn.net/mindfloating/article/details/50774564)
 
-[<Raft动画(超赞)>](http://thesecretlivesofdata.com/raft/)
+[\<Raft动画(超赞)\>](http://thesecretlivesofdata.com/raft/)
 
 <大数据日志录>

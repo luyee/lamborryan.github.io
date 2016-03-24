@@ -188,4 +188,4 @@ public JavaJobRunnerMain() throws Exception {
 
 本文介绍了gobblin如何结合azkaban配置工作流调度, 并简要介绍了调度源码。由于gobblin的资料实在太少, 所以往往只能查阅源码，不过这也是一件有趣的事情。
 
-本文完。
+本文完

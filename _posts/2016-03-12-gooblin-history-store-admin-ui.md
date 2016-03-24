@@ -13,7 +13,7 @@ tags: Gobblin
 
 ## History Store
 
-History Store的内容在[<Gobblin文档>](https://github.com/linkedin/gobblin/wiki/Job%20Execution%20History%20Store)里有介绍, 代码对应gobblin-metastore package.
+History Store的内容在[\<Gobblin文档\>](https://github.com/linkedin/gobblin/wiki/Job%20Execution%20History%20Store)里有介绍, 代码对应gobblin-metastore package.
 
 History Store 数据是存放在mysql上，所以需要在配置中加入以下内容:
 
@@ -126,4 +126,4 @@ Dev2KafkaHDFSAVRO_test  COMMITTED  2016-03-18T17:30:00  2016-03-18T17:30:04  0 *
 本文主要介绍了如何配置实现gobblin的web监控以及history store。总体来说, 这个监控做的还是不错的。
 下一篇将简要介绍gobblin-runtime。
 
-本文完。
+本文完
