@@ -1,7 +1,10 @@
 markdown: rdiscount
 permalink: /:title/
 url: http://lamborryan.github.io
-highlighter: pygments
+highlighter: rouge
+markdown: kramdown
+kramdown:
+  input: GFM
 gems:
     - jekyll-paginate
 
