@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Gobblin系列六之Writer源码分析
+title: Gobblin系列五之Writer源码分析
 date: 2016-03-23 13:30:00
 categories: 大数据
 tags: Gobblin
 ---
-# Gobblin系列六之Writer源码分析
+# Gobblin系列五之Writer源码分析
 
 ## 简介
 
