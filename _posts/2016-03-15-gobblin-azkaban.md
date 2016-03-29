@@ -5,7 +5,6 @@ date: 2016-03-15 13:30:00
 categories: 大数据
 tags: Gobblin
 ---
-# Gobblin系列三之Azkaban Schedule
 
 ## 前言
 

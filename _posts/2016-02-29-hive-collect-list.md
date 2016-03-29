@@ -5,7 +5,6 @@ date: 2016-02-29 13:00:01
 categories: 大数据
 tags: Hive
 ---
-# Hive数据仓库之collect_list浅谈
 
 ## 前言
 Hive的collect_list函数是个聚合函数, 它可以将Group By后的列聚合为一个list(不去重)。类似的有collect_set(去重)。
@@ -108,7 +107,7 @@ public GenericUDAFEvaluator getEvaluator(TypeInfo[] parameters)
               + parameters[0].getTypeName() + " was passed as parameter 1.");
   }
   return new GenericUDAFMkCollectionEvaluator(BufferType.LIST);
-} 
+}
 ```
 
 ### 打patch

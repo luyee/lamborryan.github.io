@@ -5,7 +5,6 @@ date: 2016-03-23 13:30:00
 categories: 大数据
 tags: Gobblin
 ---
-# Gobblin系列五之Writer源码分析
 
 ## 简介
 

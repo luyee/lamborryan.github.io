@@ -5,7 +5,6 @@ date: 2016-03-12 13:30:00
 categories: 大数据
 tags: Gobblin
 ---
-# Gobblin系列二之History Store 和 Admin Server
 
 ## 简介
 

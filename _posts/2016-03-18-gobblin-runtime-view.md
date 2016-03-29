@@ -5,7 +5,6 @@ date: 2016-03-18 13:30:00
 categories: 大数据
 tags: Gobblin
 ---
-# Gobblin系列四之Runtime初探
 
 ## 简介
 
