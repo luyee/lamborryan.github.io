@@ -107,8 +107,8 @@ def getPartition(key,num):
 
 ### 引用:
 
-[\<探索C#之虚拟桶分片\>](http://www.cnblogs.com/mushroom/archive/2015/05/31/4542772.html)
+[《探索C#之虚拟桶分片》](http://www.cnblogs.com/mushroom/archive/2015/05/31/4542772.html)
 
-[\<一致性哈希与java实现\>](http://www.blogjava.net/hello-yun/archive/2012/10/10/389289.html)
+[《一致性哈希与java实现》](http://www.blogjava.net/hello-yun/archive/2012/10/10/389289.html)
 
 本文完.

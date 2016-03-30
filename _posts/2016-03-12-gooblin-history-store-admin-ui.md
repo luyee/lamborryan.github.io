@@ -12,7 +12,7 @@ tags: Gobblin
 
 ## History Store
 
-History Store的内容在[\<Gobblin文档\>](https://github.com/linkedin/gobblin/wiki/Job%20Execution%20History%20Store)里有介绍, 代码对应gobblin-metastore package.
+History Store的内容在[《Gobblin文档》](https://github.com/linkedin/gobblin/wiki/Job%20Execution%20History%20Store)里有介绍, 代码对应gobblin-metastore package.
 
 History Store 数据是存放在mysql上，所以需要在配置中加入以下内容:
 
