@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Gobblin系列六之State
-date: 2016-03-28 13:30:00
+date: 2016-03-25 13:30:00
 categories: 大数据
 tags: Gobblin
 ---
