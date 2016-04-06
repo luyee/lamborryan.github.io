@@ -180,3 +180,8 @@ https://github.com/mongodb/mongo-hadoop/wiki/Hive-Usage
 本文主要介绍了如何使用mongo-hadoop 与 hive结合, 在mongo上执行hsql查询。 同时介绍了mongo-hadoop的几个安全注意事项。
 
 本文完
+
+
+* 原创文章，转载请注明： 转载自[Lamborryan](<lamborryan.github.io>)，作者：[Ruan Chengfeng](<http://lamborryan.github.io/about/>)
+* 本文链接地址：http://lamborryan.github.io/mongo-hadoop-hive
+* 本文基于[署名2.5中国大陆许可协议](<http://creativecommons.org/licenses/by/2.5/cn/>)发布，欢迎转载、演绎或用于商业目的，但是必须保留本文署名和文章链接。 如您有任何疑问或者授权方面的协商，请邮件联系我。

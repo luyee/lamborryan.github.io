@@ -58,3 +58,8 @@ where t.rownumber = 1
 * distribute by + sort 实现的是分区排序, 它只保证该分区的有序; order by 是全局排序, 它在单个reduce里面进行排序, 因此性能可能会很差。 这里使用分区排序刚好。详见 http://www.crazyant.net/1456.html
 
 本文完
+
+
+* 原创文章，转载请注明： 转载自[Lamborryan](<lamborryan.github.io>)，作者：[Ruan Chengfeng](<http://lamborryan.github.io/about/>)
+* 本文链接地址：http://lamborryan.github.io/hive-row-number-duplicate
+* 本文基于[署名2.5中国大陆许可协议](<http://creativecommons.org/licenses/by/2.5/cn/>)发布，欢迎转载、演绎或用于商业目的，但是必须保留本文署名和文章链接。 如您有任何疑问或者授权方面的协商，请邮件联系我。

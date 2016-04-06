@@ -184,3 +184,8 @@ Time taken: 0.146 seconds
 2. 将在下一篇文章中介绍, 实现AbstractSemanticAnalyzerHook接口, 当用户要进行相应权限操作时候, 在该接口中通过hook过滤掉我们设定的不具有相应权限的用户, 从而实现超级管理员。
 
 本文完。
+
+
+* 原创文章，转载请注明： 转载自[Lamborryan](<lamborryan.github.io>)，作者：[Ruan Chengfeng](<http://lamborryan.github.io/about/>)
+* 本文链接地址：http://lamborryan.github.io/hive-authority
+* 本文基于[署名2.5中国大陆许可协议](<http://creativecommons.org/licenses/by/2.5/cn/>)发布，欢迎转载、演绎或用于商业目的，但是必须保留本文署名和文章链接。 如您有任何疑问或者授权方面的协商，请邮件联系我。
