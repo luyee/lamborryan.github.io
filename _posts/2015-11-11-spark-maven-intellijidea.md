@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Spark学习(2)之Intellij Idea和Maven部署spark应用
+title: Spark系列(2)之Intellij Idea和Maven部署spark应用
 date: 2015-11-11 12:29:30
 categories: 大数据
 tags: Spark

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Spark学习(1)之Mac安装Spark
+title: Spark系列(1)之Mac安装Spark
 date: 2015-11-03 00:29:30
 categories: 大数据
 tags: Spark

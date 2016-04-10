@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hive数据仓库之collect_list浅谈
+title: Hive数据仓库(8)之collect_list浅谈
 date: 2016-02-29 13:00:01
 categories: 大数据
 tags: Hive

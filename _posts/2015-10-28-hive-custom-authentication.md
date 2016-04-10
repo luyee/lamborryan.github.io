@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hive数据仓库之如何使用Custom方式进行认证
+title: Hive数据仓库(1)之如何使用Custom方式进行认证
 date: 2015-10-28 13:34:30
 categories: 大数据
 tags: Hive

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hive数据仓库之Hive与Elasticsearch的结合
+title: Hive数据仓库(10)之Hive与Elasticsearch的结合
 date: 2016-04-07 13:30:00
 categories: 大数据 搜索引擎
 tags: Hive Elasticsearch

@@ -1,12 +1,10 @@
 ---
 layout: post
-title: Hive数据仓库之权限操作
-date: 2015-10-29 00:29:30
+title: Hive数据仓库(3)之权限操作
+date: 2015-10-31 00:29:30
 categories: 大数据
 tags: Hive
 ---
-# Hive数据仓库之权限操作
-
 #一. 简介
 
 * 像MySQL一样, Hive也可以实现较细颗粒度的权限管理, 比如可以赋予某个用户CREATE, SELECT, ALTER, DELETE等不同的权限, 也可以对不同的用户和组分配权限, 但是由于Hive是NoSQL, 所以他有自身的一些特点和缺陷。

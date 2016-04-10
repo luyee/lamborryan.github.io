@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Hadoop之LZO Compress深入
+title: Hadoop系列(1)之LZO Compress深入
 date: 2016-02-23 23:30:00
 categories: 大数据
 tags: Hadoop Hive Spark Hbase Sqoop
 ---
-# Hadoop之LZO Compress深入
+
 ## 1.前言
 [《Hadoop之LZO Compress配置安装》](http://lamborryan.github.io/hadoop-lzo-compress/)介绍了Hadoop及其他组件增加LZO压缩功能的配置安装, 本文将进一步介绍使用中遇到的坑以及如何实现LZO文件的split。
 

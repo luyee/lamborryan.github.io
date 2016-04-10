@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Hive数据仓库之行分隔符line delimiter问题
+title: Hive数据仓库(7)之Mongo-Hadoop的行分隔符line delimiter问题
 date: 2015-11-26 12:30:00
 categories: 大数据
 tags: Hive Mongo-Hadoop

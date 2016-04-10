@@ -1,11 +1,10 @@
 ---
 layout: post
-title: Hive数据仓库之mongo-hadoop的使用
+title: Hive数据仓库(4)之Mongo-Hadoop的使用
 date: 2015-11-17 12:29:30
 categories: 大数据
 tags: Hive Mongo-Hadoop
 ---
-# Hive数据仓库之mongo-hadoop的使用
 
 ## 前言
 公司使用mongo存储了部分业务数据,当然mongo有很多优点:

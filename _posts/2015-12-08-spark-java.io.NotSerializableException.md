@@ -1,12 +1,10 @@
 ---
 layout: post
-title: SparkTask未序列化(Tasknotserializable)问题分析
+title: Spark系列(3)之SparkTask未序列化(Tasknotserializable)问题分析
 date: 2015-12-08 10:30:35
 categories: 大数据
 tags: Spark
 ---
-
-## SparkTask未序列化(Tasknotserializable)问题分析
 
 ### 前言
 在用spark建推荐系统的时候,出现了以下这个问题:

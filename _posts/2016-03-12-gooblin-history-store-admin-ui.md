@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Gobblin系列二之History Store 和 Admin Server
+title: Gobblin系列(2)之History Store 和 Admin Server
 date: 2016-03-12 13:30:00
 categories: 大数据
 tags: Gobblin

@@ -1,11 +1,10 @@
 ---
 layout: post
-title: Hive数据仓库之超级管理员实现
-date: 2015-10-31 00:29:30
+title: Hive数据仓库(2)之超级管理员实现
+date: 2015-10-29 00:29:30
 categories: 大数据
 tags: Hive
 ---
-# Hive数据仓库之超级管理员实现
 
 ##一. 简介
 Hive默认情况下是没有超级管理员的, hive的user和group其实对应的是linux的user和group, 也就是说任何一个用户都可以修改自身的权限以及别的用户的权限。本文将介绍如何通过hive的hook来实现超级管理员权限，主要的思路就是除了管理员可以进行grant, revoke这些操作外，其他用户不能使用这些命令。

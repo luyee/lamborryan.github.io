@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Gobblin系列三之Azkaban Schedule
+title: Gobblin系列(3)之Azkaban Schedule
 date: 2016-03-15 13:30:00
 categories: 大数据
 tags: Gobblin

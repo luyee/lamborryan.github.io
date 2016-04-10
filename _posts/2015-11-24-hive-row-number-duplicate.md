@@ -1,11 +1,10 @@
 ---
 layout: post
-title: Hive数据仓库之数据去重
+title: Hive数据仓库(6)之数据去重
 date: 2015-11-24 13:30:00
 categories: 大数据
 tags: Hive
 ---
-# Hive数据仓库之数据去重
 
 ## 使用场景
 

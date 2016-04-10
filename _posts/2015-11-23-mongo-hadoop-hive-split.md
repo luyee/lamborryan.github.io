@@ -1,11 +1,10 @@
 ---
 layout: post
-title: Hive数据仓库之mongo-hadoop的split
+title: Hive数据仓库(5)之Mongo-Hadoop的split
 date: 2015-11-23 21:30:45
 categories: 大数据
 tags: Hive Mongo-Hadoop
 ---
-# Hive数据仓库之mongo-hadoop的split
 
 ## 前言
 

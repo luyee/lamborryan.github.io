@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Gobblin系列一之初探
+title: Gobblin系列(1)一之初探
 date: 2016-03-09 13:30:00
 categories: 大数据
 tags: Gobblin

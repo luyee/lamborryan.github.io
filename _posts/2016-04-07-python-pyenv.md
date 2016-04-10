@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Python之pyenv进行多版本管理
+title: Python系列(2)之pyenv进行多版本管理
 date: 2016-04-07 13:30:00
 categories: 编程语言
 tags: Python

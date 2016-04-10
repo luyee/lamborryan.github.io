@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Gobblin系列八之Extractor源码分析
+title: Gobblin系列(8)之Extractor源码分析
 date: 2016-03-30 13:30:00
 categories: 大数据
 tags: Gobblin

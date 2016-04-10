@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 大数据基础之Raft协议初探
+title: 大数据基础(2)之Raft协议初探
 date: 2016-03-03 13:30:00
 categories: 大数据
 tags: 大数据基础

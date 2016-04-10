@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Gobblin系列四之Runtime初探
+title: Gobblin系列(4)之Runtime初探
 date: 2016-03-18 13:30:00
 categories: 大数据
 tags: Gobblin

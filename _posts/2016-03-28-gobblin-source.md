@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Gobblin系列七之Source源码分析
+title: Gobblin系列(7)之Source源码分析
 date: 2016-03-28 13:30:00
 categories: 大数据
 tags: Gobblin

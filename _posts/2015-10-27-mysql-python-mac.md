@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Mac Install MySQL-python
+title: Python系列(1)之Mac Install MySQL-python
 date: 2015-10-27 19:34:30
 categories: 编程语言
 tags: Python

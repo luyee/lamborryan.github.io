@@ -1,11 +1,10 @@
 ---
 layout: post
-title: Hadoop之LZO Compress配置安装
+title: Hadoop系列(2)之LZO Compress配置安装
 date: 2016-02-23 23:30:00
 categories: 大数据
 tags: Hadoop Hive Spark Hbase Sqoop
 ---
-# Hadoop 之 LZO Compress 配置安装
 
 ## 前言
 
