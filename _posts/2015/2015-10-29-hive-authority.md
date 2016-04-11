@@ -5,20 +5,21 @@ date: 2015-10-31 00:29:30
 categories: 大数据
 tags: Hive
 ---
-#一. 简介
+## 一. 简介
 
 * 像MySQL一样, Hive也可以实现较细颗粒度的权限管理, 比如可以赋予某个用户CREATE, SELECT, ALTER, DELETE等不同的权限, 也可以对不同的用户和组分配权限, 但是由于Hive是NoSQL, 所以他有自身的一些特点和缺陷。
 * Hive的安全机制是为了防止用户误删, 而不是为了防止数据泄漏, 所以只要通过hive验证的用户都能够修改自己的权限。 假设root和user1都没有select ＊from table1 的权限, user1经过验证后就可以通过grant和revoke来修改root和user1自己的权限, 同样user1也可以修改root的权限。
 * 不像Linux中root(管理员)和user1(普通用户), 在Hive中默认是没有管理员的, 也就是说root用户和user1的用户的地位是等同的, 所以root和user1可以互相修改对方的权限。在下一篇文章中, 将介绍如何通过代码来实现Hive的管理员。
 
-#二. Hive的权限操作
+## 二. Hive的权限操作
 
 上一节简单介绍了Hive的优点和不足, 本节开始将介绍Hive如何来控制权限.
 
-##1. 配置
+### 1. 配置
 
 要实现权限的相关操作, 需要在hive-site.xml修改配置
-{% highlight bash linenos %}
+
+```xml
 <property>
     <name>hive.security.authorization.enabled</name>
     <value>true</value>
@@ -30,16 +31,18 @@ tags: Hive
     <!--value>admin1,edward:select;user1:create</value-->
     <description>the privileges automatically granted to the owner whenever a table gets created. An example like "select,drop" will grant select and drop privilege to the owner of the table</description>
 </property>
-{% endhighlight bash %}
+```
+
 也可以在hive命令行中开启权限
-{% highlight bash linenos %}
+
+```shell
 hive> set hive.security.authorization.enabled=true;
 hive> CREATE TABLE auth_test (key int, value string);    
 Authorization failed:No privilege 'Create' found for outputs { database:default}.    
 Use show grant to get more details.
-{% endhighlight bash %}
+```
 
-##2. 权限的细分
+### 2. 权限的细分
 
 权限控制主要分为以下几个:
 
@@ -55,7 +58,8 @@ Use show grant to get more details.
 Hive支持不同层次的权限控制, 从全局－> 数据库－> 数据表 -> 列 （-> 分区)。 注意有些权限比如drop等在列上不起作用。
 
 语法:
-{% highlight bash linenos %}
+
+```shell
 GRANT
     priv_type [(column_list)]
       [, priv_type [(column_list)]] ...
@@ -79,9 +83,9 @@ object_type:
 priv_level:
     db_name
   ¦ tbl_name
-{% endhighlight bash %}
+```
 
-##3. 操作举例
+### 3. 操作举例
 
 查看权限
 
@@ -105,10 +109,11 @@ priv_level:
 * revoke drop on table default.test from user root;
 * revoke select (id), select (name) on default.test from user root;
 
-##4. 用户,组,角色
+### 4. 用户,组,角色
 
 当Hive里面用于N多用户和N多张表的时候，管理员给每个用户授权每张表会让他崩溃的。所以，这个时候就可以进行组(GROUP)授权。
-{% highlight bash linenos %}
+
+```shell
 hive> CREATE TABLE auth_test_group(a int,b int);  
 hive> SELECT * FROM auth_test_group;  
 Authorization failed:No privilege 'Select' found for inputs  
@@ -118,9 +123,11 @@ hive> GRANT SELECT on table auth_test_group to group hadoop;
 hive> SELECT * FROM auth_test_group;  
 OK  
 Time taken: 0.119 seconds  
-{% endhighlight bash %}
+```
+
 当给用户组授权变得不够灵活的时候，角色(ROLES)就派上用途了。用户可以被放在某个角色之中，然后角色可以被授权。角色不同于用户组，是由Hadoop控制的，它是由Hive内部进行管理的。
-{% highlight bash linenos %}
+
+```shell
 hive> CREATE TABLE auth_test_role (a int , b int);  
 hive> SELECT * FROM auth_test_role;  
 Authorization failed:No privilege 'Select' found for inputs  
@@ -132,13 +139,15 @@ hive> GRANT SELECT ON TABLE auth_test_role  TO ROLE users_who_can_select_auth_te
 hive> SELECT * FROM auth_test_role;  
 OK  
 Time taken: 0.103 seconds  
-{% endhighlight bash %}
+```
+
 group和role的权限操作只需将前面的user换成group或者role即可。
 
-##5. 分区表的授权
+### 5. 分区表的授权
 
 默认情况下，分区表的授权将会跟随表的授权，也可以给每一个分区建立一个授权机制，只需要设置表的属性PARTITION_LEVEL_PRIVILEGE设置成TRUE:
-{% highlight bash linenos %}
+
+```shell
 hive> CREATE TABLE authorize_part (key INT, value STRING) > PARTITIONED BY (ds STRING);
 hive> ALTER TABLE authorization_part SET TBLPROPERTIES ("PARTITION_LEVEL_PRIVILEGE"="TRUE");
 Authorization failed:No privilege 'Alter' found for inputs {database:default, table:authorization_part}.
@@ -154,9 +163,9 @@ Authorization failed:No privilege 'Select' found for inputs
 { database:default, table:authorization_part, partitionName:ds=3, columnName:key}. Use show grant to get more details.
 hive> SELECT * FROM authorization_part WHERE ds='4'; OK
 Time taken: 0.146 seconds
-{% endhighlight bash %}
+```
 
-##6. metastore
+### 6. metastore
 
 在hive metastore database里存放跟权限有关的是以下几张表, 这些表对应相应层次存储。
 
@@ -167,7 +176,7 @@ Time taken: 0.146 seconds
 5. PART_PRIVS, 存放表分区的权限
 6. PART_COL_PRIVS, 存放表分区的列的权限
 
-#三. 总结
+## 三. 总结
 
 最后再重点强调下Hive的权限的缺陷。
 

@@ -6,13 +6,14 @@ categories: 大数据
 tags: Hive
 ---
 
-##一. 简介
+## 一. 简介
 Hive默认情况下是没有超级管理员的, hive的user和group其实对应的是linux的user和group, 也就是说任何一个用户都可以修改自身的权限以及别的用户的权限。本文将介绍如何通过hive的hook来实现超级管理员权限，主要的思路就是除了管理员可以进行grant, revoke这些操作外，其他用户不能使用这些命令。
 
-##二. 实现
+## 二. 实现
 
 要实现超级管理员需要实现AbstractSemanticAnalyzerHook接口, 以下代码实现功能:只有hive-hite.xml里配置的hive.admin.username用户才能使用权限相关的操作。
-{% highlight java linenos %}
+
+```java
 package com.lamboryan.authentication;
 import org.apache.hadoop.hive.ql.parse.ASTNode;
 import org.apache.hadoop.hive.ql.parse.AbstractSemanticAnalyzerHook;
@@ -57,10 +58,11 @@ public class AuthHook extends AbstractSemanticAnalyzerHook {
         return ast;
     }
 }
-{% endhighlight java %}
+```
 
 需要在hive-site.xml配置以下内容
-{% highlight bash linenos %}
+
+```xml
 <property>
     <name>hive.semantic.analyzer.hook</name>
     <value>com.paitao.xmlife.authentication.AuthHook</value>  
@@ -69,10 +71,11 @@ public class AuthHook extends AbstractSemanticAnalyzerHook {
     <name>hive.admin.username</name>
     <value>root</value>
 </property>
-{% endhighlight bash %}
+```
 
 查看效果, 当我尝试用bmw账户去修改权限时候提示不行
-{% highlight bash linenos %}
+
+```shell
 0: jdbc:hive2://localhost:10000> show tables;
 +---------------------+--+
 |      tab_name       |
@@ -86,9 +89,9 @@ public class AuthHook extends AbstractSemanticAnalyzerHook {
 5 rows selected (0.953 seconds)
 0: jdbc:hive2://localhost:10000> grant select on table test to user bmw;
 Error: Error while compiling statement: FAILED: SemanticException bmw can't use ADMIN options, except root. (state=42000,code=40000)
-{% endhighlight bash %}
+```
 
-##三. 总结
+## 三. 总结
 
 本文简单的介绍了如何用hive接口实现超级管理员。
 

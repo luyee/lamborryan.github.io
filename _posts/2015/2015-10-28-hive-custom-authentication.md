@@ -7,7 +7,7 @@ tags: Hive
 ---
 # Hive数据仓库之如何使用Custom方式进行认证
 
-##一.简介
+## 一.简介
 Hive默认情况下是不需任何认证就可以访问HiveServer2的，这种情况下显然不适合生产环境。
 
 * Hive具有三种用户登入认证方式:
@@ -21,7 +21,7 @@ Hive默认情况下是不需任何认证就可以访问HiveServer2的，这种�
 
 要实现Custom方式的认证，需要实现以下接口:
 
-{% highlight java linenos %}
+```java
 public interface PasswdAuthenticationProvider {
   /**
    * The Authenticate method is called by the HiveServer2 authentication layer
@@ -38,12 +38,12 @@ public interface PasswdAuthenticationProvider {
    */
   void Authenticate(String user, String password) throws AuthenticationException;
 }
-{% endhighlight java %}
+```
 
-##二.接口实现
+## 二.接口实现
 以下是完整的代码实例：
 
-{% highlight java linenos %}
+```java
 package com.lamborryan.authentication;
 import javax.security.sasl.AuthenticationException;
 import org.apache.commons.configuration.ConfigurationException;
@@ -103,17 +103,17 @@ public class CustomPasswdAuthenticator implements PasswdAuthenticationProvider,C
         this.conf=arg0;
     }
 }
-{% endhighlight java %}
+```
 
 * 以上代码实现了一个hook:
 * 1.在进行认证的时候从配置文件中读取用户名和密码，并判断是否与当前的用户名密码一致。
 * 2.hive-site.xml里面hive.jdbc.auth.config项的值存的是用户名和密码的文件路径，如此就可以在线更新用户名密码。
 
-##三.配置
+## 三.配置
 
-###1. maven依赖配置
+### 1. maven依赖配置
 
-{% highlight bash linenos %}
+```shell
 <dependencies>
      <dependency>
          <groupId>org.apache.hive</groupId>
@@ -126,13 +126,13 @@ public class CustomPasswdAuthenticator implements PasswdAuthenticationProvider,C
          <version>2.6.0</version>
      </dependency>
  </dependencies>
-{% endhighlight bash %}
+```
 
 将编译好的包存放入 ${HIVE_HOME}/lib下面
 
-###2. 修改hive-site.xml
+### 2. 修改hive-site.xml
 
-{% highlight bash linenos %}
+```xml
  <property>
   <name>hive.security.authorization.enabled</name>
   <value>true</value>
@@ -159,34 +159,34 @@ public class CustomPasswdAuthenticator implements PasswdAuthenticationProvider,C
   <name>hive.server2.enable.doAs</name>
   <value>true</value>
 </property>
-{% endhighlight bash %}
+```
 
-###3. 设置用户名和密码
+### 3. 设置用户名和密码
 
 每当用户进行认证，都会读取hive.jdbc.auth.config的值，比如这里的/kiss/configs/hive/auth.properties，该配置文件存放了所有的用户名和对应的密码
 
-{% highlight bash linenos %}
+```shell
 hive.jdbc_passwd.auth.admin=AAAAAAAAAAAA
 hive.jdbc_passwd.auth.lamboray=BBBBBBBBBB
-{% endhighlight bash %}
+```
 
 需要注意以下配置项
 
-{% highlight bash linenos %}
+```xml
 <property>
   <name>hive.server2.enable.doAs</name>
   <value>true</value>
 </property>
-{% endhighlight bash %}
+```
 
 该配置使得hive server会以提交用户的身份去执行语句，如果设置为false，则会以起hive server daemon的admin user(一般情况是root)来执行语句。
 
-##四.验证
+## 四.验证
 
 使用python pyhs2客户端来进行验证
 
-{% highlight bash linenos %}
-import pyhs2
+```shell
+import python
 with pyhs2.connect(host='127.0.0.1',
                   port=10000,
                   authMechanism="PLAIN",
@@ -197,11 +197,11 @@ with pyhs2.connect(host='127.0.0.1',
     with conn.cursor() as cur:
          cur.execute("select * from default.test")
          print cur.fetchmany(100)
-{% endhighlight bash %}
+```
 
 如果user和password错误就登入失败了。
 
-##五.总结
+## 五.总结
 
 该方法是个比较简单且有效的方法。
 
