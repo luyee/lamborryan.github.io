@@ -1,5 +1,5 @@
 ---
-title: 归档
+title: 我的专栏
 layout: page
 comments: no
 ---
@@ -19,3 +19,8 @@ comments: no
 
 * hive是基于Hadoop的一个数据仓库工具，可以将结构化的数据文件映射为一张数据库表，并提供简单的sql查询功能，可以将sql语句转换为MapReduce任务进行运行。我们常常使用Hive来进行数据维度建模以及ETL.
 * 本系列文章主要记录了我在使用HIVE进行ETL和维度建模的一些操作配置的心得笔记, 不涉及Hive的源码分析。
+
+## [Hadoop系列汇总](<http://www.lamborryan.com/hadoop-collect>)
+
+* Hadoop是一个分布式系统基础架构, 他已经成为了大数据的代名词。他主要由分布式文件系统HDFS, 分布式计算框架MapReduce, 分布式资源管理系统Yarn三部分组成。
+* 本系列文章主要记录我在使用Hadoop过程中遇到的问题, 对Hadoop的理解, 以及阅读Hadoop资料和源码的笔记。
