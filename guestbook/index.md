@@ -5,10 +5,8 @@ comments: yes
 thread: 616
 ---
 
-![come on](guest.jpg)
-
-
-来了，就留下你的足迹吧～
+我的微信公众号:
+![img](../image/weixin.jpg)
 
 <div id="ds-thread" class="ds-thread" data-url="{{ page.url }}" data-title="{{ page.title }}" data-thread-key="{{ page.title }}"></div>
   <script type="text/javascript">

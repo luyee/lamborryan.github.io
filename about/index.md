@@ -26,3 +26,6 @@ comments: no
 * GitHub：[http://github.com/{{ site.github }}](http://github.com/{{ site.github }})
 * QQ: 282335345
 * cnblogs：[http://www.cnblogs.com/rcfeng/](http://www.cnblogs.com/rcfeng/)
+* 我的微信公众号 lamborryan
+
+![img](../image/weixin.jpg)
