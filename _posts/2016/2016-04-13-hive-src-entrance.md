@@ -44,7 +44,81 @@ Hive还支持Jdbc和Odbc调用。JDBC Hive已经自带, HiveServer2的odbc hive�
 
 ## 3. Cli入口
 
-### 3.1 启动脚本
+### 3.1 bin/hive
+
+首先, 我们来搞懂下hive这个客户端脚本. 在$HIVE_HOME/bin目录下存在ext目录, 他里面存放了各种启动脚本比如cli.sh, beeline.sh。 而这些脚本都是在bin/hive中被调用的。
+
+在bin/hive脚本中存在以下几个service:
+
+```shell
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --version)
+      shift
+      SERVICE=version
+      ;;
+    --service)
+      shift
+      SERVICE=$1
+      shift
+      ;;
+    --rcfilecat)
+      SERVICE=rcfilecat
+      shift
+      ;;
+    --orcfiledump)
+      SERVICE=orcfiledump
+      shift
+      ;;
+    --help)
+      HELP=_help
+      shift
+      ;;
+    --debug*)
+      DEBUG=$1
+      shift
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
+if [ "$SERVICE" = "" ] ; then
+  if [ "$HELP" = "_help" ] ; then
+    SERVICE="help"
+  else
+    SERVICE="cli"
+  fi
+fi
+```
+
+这些SERVICE都分别对应 bin/ext/XX.sh。bin/hive 会把所有bin/ext和bin/ext/util目录下的sh脚本通过```. XX.sh```的方式加载到环境变量中, 然后只需要运行XX命令就行了。
+
+```shell
+SERVICE_LIST=""
+
+for i in "$bin"/ext/*.sh ; do
+  . $i
+done
+
+for i in "$bin"/ext/util/*.sh ; do
+  . $i
+done
+
+TORUN=""
+for j in $SERVICE_LIST ; do
+  if [ "$j" = "$SERVICE" ] ; then
+    TORUN=${j}$HELP
+  fi
+done
+
+ $TORUN "$@"
+```
+
+比如当我运行```hive -e 'show tables';```, 因为没指定service, 所以bin/hive默认service为cli. 当运行以上代码时候, bin/hive会把bin/ext/cli.sh加载到环境变量中, 后续通过```cli -e 'show tables;'```就直接运行了bin/ext/cli.sh这个脚本。同理beeline。
+
+### 3.2 启动脚本
 
 从shell脚本/usr/lib/hive/bin/ext/cli.sh可以看到hive cli的入口类为org.apache.hadoop.hive.cli.CliDriver
 
@@ -60,7 +134,7 @@ cli_help () {
 }
 ```
 
-### 3.2 入口类
+### 3.3 入口类
 
 java中的类如果有main方法就能运行，故直接查找org.apache.hadoop.hive.cli.CliDriver中的main方法即可。
 
@@ -73,29 +147,40 @@ public static void main(String[] args) throws Exception {
 
 那么我们来查看下```Run```到底干了啥。
 
-* 读取main方法的参数.(```OptionsProcessor.process_stage1```)
-* 重置默认的log4j配置并为hive重新初始化log4j，注意，在这里是读取hive-log4j.properties来初始化log4j。(```LogUtils.initHiveLog4j()```)
-* 创建CliSessionState，并初始化in、out、info、error等stream流。CliSessionState是一次命令行操作的session会话，其继承了SessionState。(``` CliSessionState ss = new CliSessionState(new HiveConf(SessionState.class));```)
-* 重命令行参数中读取参数并设置到CliSessionState中。((```OptionsProcessor.process_stage2```))
-* 启动SessionState并连接到hive server。
+* 读取main方法的参数.
+* 重置默认的log4j配置并为hive重新初始化log4j，注意，在这里是读取hive-log4j.properties来初始化log4j。
+* 创建CliSessionState，并初始化in、out、info、error等stream流。CliSessionState是一次命令行操作的session会话，其继承了SessionState。
+* 重命令行参数中读取参数并设置到CliSessionState中。
+* 启动SessionState。
+
+> 根据OptionsProcessor类的源码来看, 虽然CliDriver里面出现了CliSessionState, 但是它并不提供远程调用。也就是说CliDriver其实只支持本地调用。OptionsProcessor主要将命令行参数转换为CliSessionState. 而在Run的流程中SessionState只有当HIVE_EXECUTION_ENGINE为tez才会去连接server。一般情况下这个CliSessionState是本地的,只是定义了这个类且作为存储数据用而已。不要被```CliDriver.run()```里面的```SessionState.start(ss)```迷惑了。
 
 ```java
-session = TezClient.create("HIVE-" + sessionId, tezConfig, true,
-    commonLocalResources, null);
-TezJobMonitor.initShutdownHook();
-session.start();
+if (HiveConf.getVar(startSs.getConf(), HiveConf.ConfVars.HIVE_EXECUTION_ENGINE)
+        .equals("tez") && (startSs.isHiveServerQuery == false)) {
+      try {
+        if (startSs.tezSessionState == null) {
+          startSs.tezSessionState = new TezSessionState(startSs.getSessionId());
+        }
+        if (!startSs.tezSessionState.isOpen()) {
+          startSs.tezSessionState.open(startSs.conf); // should use conf on session start-up
+        }
+      } catch (Exception e) {
+        throw new RuntimeException(e);
+      }
+    }
 ```
 
-* 创建一个CliDriver对象，并设置当前选择的数据库。可以在命令行参数添加-database database来选择连接那个数据库，默认为default数据库。(``cli.processSelectDatabase(ss);```)
-* 加载初始化文件.hiverc，该文件位于当前用户主目录下，读取该文件内容后，然后调用processFile方法处理文件内容。(```CliDriver.processInitFiles```)
-* 如果命令行中有-e参数，则运行指定的sql语句；如果有-f参数，则读取该文件内容并运行。注意：不能同时指定这两个参数。```hive -e 'show tables'; hive -f /root/hive.sql```。
-* 如果没有指定上面两个参数，则从当前用户主目录读取.hivehistory文件，如果不存在则创建。该文件保存了当前用户所有运行的hive命令。
-* 在while循环里不断读取控制台的输入内容，每次读取一行，如果行末有分号，则调用CliDriver的processLine方法运行读取到的内容。
+* 创建一个CliDriver对象，并设置当前选择的数据库。可以在命令行参数添加-database database来选择连接那个数据库，默认为default数据库。
+* 加载初始化文件.hiverc，该文件位于当前用户主目录下，读取该文件内容后，然后调用processFile方法处理文件内容。
+* 如果命令行中有-e参数，则运行指定的sql语句, ```CliDriver.processLine```；如果有-f参数，则读取该文件内容并运行,```CliDriver.processFile```。注意：不能同时指定这两个参数。
+* 如果即没有-e, 也没有-f, 则说明是交互式的方式启动的。那么就会调用```    setupConsoleReader();
+```来启动Console交互。在while循环里不断读取控制台的输入内容，每次读取一行，如果行末有分号，则调用CliDriver的processLine方法运行读取到的内容。
 * 每次调用processLine方法时，都会创建SignalHandler用于捕捉用户的输入，当用户输入Ctrl+C时，会kill当前正在运行的任务以及kill掉当前进程。kill当前正在运行的job的代码如下. ```HadoopJobExecHelper.killRunningJobs();
 ```
-* 处理hive命令。
+* 无论最后是-e, -f还是都没有, 最后都是调用```processCmd```来处理处理hive命令。
 
-### 3.3 处理hive命令
+### 3.4 处理hive命令
 
 Hive Shell 不但支持sql语句, 还支持shell, hadoop shell等命令, 甚至add, set环境变量等名。 那么我们来看Hive是怎么处理这里命令的。 这部分的内容尽都在```CliDriver.processCmd```方法内。
 
