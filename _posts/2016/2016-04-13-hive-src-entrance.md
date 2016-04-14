@@ -389,9 +389,9 @@ SessionManager内主要是OperationManager这个服务，是最重要的和执�
 
 在SessionManager建立好连接后，会将其管理在一个SessionManager对象的一个Map中handleToSession，以SessionHandle为key，并将key返回给客户端，后续客户端在这个会话中的请求，都会携带这个sessionHandle，作为寻找Session的唯一ID。
 
-```handleToSession```的数据结构如下
+handleToSession的数据结构如下
 
-``` java
+```java
 private final Map<SessionHandle, HiveSession> handleToSession =
       new ConcurrentHashMap<SessionHandle, HiveSession>();
 ```
