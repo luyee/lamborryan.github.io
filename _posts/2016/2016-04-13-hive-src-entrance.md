@@ -385,7 +385,7 @@ SessionManager内主要是OperationManager这个服务，是最重要的和执�
 
 上小节讲到CLIService里几乎所有的事情都是委托给SessionManager做的。 那么是如何实现的呢？
 
-#### 创建Session
+#### 5.3.1 创建Session
 
 在SessionManager建立好连接后，会将其管理在一个SessionManager对象的一个Map中handleToSession，以SessionHandle为key，并将key返回给客户端，后续客户端在这个会话中的请求，都会携带这个sessionHandle，作为寻找Session的唯一ID。
 
@@ -412,7 +412,7 @@ public SessionHandle openSession(String username, String password, Map<String, S
 }
 ```
 
-#### 获取Session
+#### 5.3.2 获取Session
 
 当需要执行hive命令时, client会根据sessionHandle向handleToSession获取其对应的HiveSession, 然后调用HiveSession的executeStatement等方法进行相应处理。
 
@@ -430,7 +430,7 @@ public OperationHandle executeStatement(SessionHandle sessionHandle, String stat
 }
 ```
 
-#### 总结
+#### 5.3.3 总结
 
 写到这里需要再理一下CLIService与SessionManager的关系, 我用下图进行表示吧:
 
@@ -466,7 +466,7 @@ private OperationHandle executeStatementInternal(String statement, Map<String, S
 
 由此可见最后通过OperationManager的newExecuteStatementOperation获取Operation, 然后通过```operation.run();```来执行hive命令。
 
-### 5.3 OperationManager
+### 5.4 OperationManager
 
 顾名思义, OperationManager就是跟操作有关的管理类. 我们来看看newExecuteStatementOperation做了啥:
 
@@ -492,7 +492,7 @@ CommandProcessorFactory 这个类是不是很熟悉?没错就是<3.4节>已经�
 
 它将命令分为两种HiveCommandOperation，包含set/dfs/add/delete/reset，以及SQLOperation(真正的sql命令)。 它们两都继承自ExecuteStatementOperation。 当然接下来我们只关注SQLOperation了。
 
-### 5.4 SQLOperation
+### 5.5 SQLOperation
 
 SQLOperation 的核心方法就是runQuery
 
