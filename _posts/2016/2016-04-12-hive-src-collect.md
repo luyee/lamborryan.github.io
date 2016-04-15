@@ -15,6 +15,7 @@ Hive源码分析系列着眼于通过源码来更深入的了解Hive, 希望了�
 ## 目录
 
 * [Hive源码分析系列(1)之框架与Client/Server入口](<http://www.lamborryan.com/hive-src-entrance>)
+* [Hive源码分析系列(2)之Driver流程分析](<http://www.lamborryan.com/hive-src-driver>)
 
 
 
