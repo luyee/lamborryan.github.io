@@ -8,7 +8,9 @@ tags: Hive源码分析
 
 ## 1. 简介
 
-本文接着上文[《Hive源码分析系列(1)之框架与Client/Server入口》](<http://www.lamborryan.com/hive-src-entrance/>)讲, 上文讲到无论Hive是哪种方式运行(Cli, beeline, HiveServer2), 流程最后都汇总到Driver类. 它肩负着将用户的command进行编译，优化并生成MapReduce任务进行执行这一使命。所以Driver也是Hive的核心，主要的逻辑处理就在这里了, 相当于主线程。 本文主要来扒一扒Driver到底做了啥。
+本文接着上文[《Hive源码分析系列(1)之框架与Client/Server入口》](<http://www.lamborryan.com/hive-src-entrance/>)讲, 上文讲到无论Hive是哪种方式运行(Cli, beeline, HiveServer2), 流程最后都汇总到Driver类. 它肩负着将用户的command进行编译，优化并生成MapReduce任务进行执行这一使命。所以Driver也是Hive的核心，主要的逻辑处理就在这里了, 相当于主线程。
+
+本文主要来扒一扒Driver到底做了啥。
 
 ## 2. 源码分析
 
