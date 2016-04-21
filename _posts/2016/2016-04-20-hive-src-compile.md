@@ -187,7 +187,7 @@ Digit
 
 fragment 用于指示 Antlr这些记号只是一个记号片段，其主要作用在于构造其他记号，被其他记号调用，词法分析器 并不会把它们当成一个完整记号向外传递。也就是说fragment相当于private,只能在本.g文件中被调用。
 
-### 4. 语法分析
+## 4. 语法分析
 
 什么是语法分析呢, 比如"lamborryan says hello", 它的结构就是主语谓语宾语。
 
@@ -341,6 +341,7 @@ AST(由于展开太大,所以只能看一部分了):
 * [技术乱弹之hive源码之词法语法解析](<https://github.com/alan2lin/hive_ql_parser#_Toc368923114>)
 * [Compiler - lexical analysis](<http://www.cnblogs.com/RicCC/archive/2008/10/04/compiler-lexical-analysis.html>)
 * [使用 Antlr 开发领域语言](<http://www.ibm.com/developerworks/cn/java/j-lo-antlr/>)
+* [技术乱弹之hand in hand with antlr](<https://github.com/alan2lin/hand_in_hand_with_antlr>)
 
 
 本文完
