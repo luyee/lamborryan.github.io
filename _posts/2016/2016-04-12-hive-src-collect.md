@@ -17,6 +17,7 @@ Hive源码分析系列着眼于通过源码来更深入的了解Hive, 希望了�
 * [Hive源码分析系列(1)之框架与Client/Server入口](<http://www.lamborryan.com/hive-src-entrance>)
 * [Hive源码分析系列(2)之Driver流程分析](<http://www.lamborryan.com/hive-src-driver>)
 * [Hive源码分析系列(3)之Compile原理分析(1)-抽象语法树AST](<http://www.lamborryan.com/hive-src-compile>)
+* [Hive源码分析系列(4)之Compile原理分析(2)-QB Tree](<http://www.lamborryan.com/hive-src-compile-2>)
 
 
 
