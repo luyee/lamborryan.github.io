@@ -242,7 +242,7 @@ public boolean doPhase1(ASTNode ast, QB qb, Phase1Ctx ctx_1, PlannerContext plan
 }
 ```
 
-逻辑清晰地显示， dophase1 采用先根的方式递归遍历抽象语法树，从左右到右边递归处理子节点。
+逻辑清晰地显示， dophase1 采用先根的方式递归遍历抽象语法树，从左到右边递归处理子节点。
 
 递归的出口是 在某些个节点(token的处理过程)上设置的skipRecursion，以及子节点处理的结果。
 
@@ -324,7 +324,7 @@ switch (ast.getToken().getType()) {
 
 ## 4. 总结
 
-本文主要介绍了AST转成QueryBlock Tree的过程， 转换的本质就是将AST转换成更符合HiveSQL的方式来组织。
+本文只是简单介绍了AST转成QueryBlock Tree的过程， 转换的本质就是将AST转换成更符合HiveSQL的方式来组织。
 
 
 ## 参考文献
