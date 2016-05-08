@@ -4,6 +4,15 @@ layout: page
 comments: no
 ---
 
+## [利用Scrapy爬取数据系列](<http://www.lamborryan.com/scrapy-collect>)
+
+* Scrapy是一套基于基于Twisted的异步处理框架，纯python实现的爬虫框架，用户只需要定制开发几个模块就可以轻松的实现一个爬虫，用来抓取网页内容以及各种图片，非常之方便.
+* 本系列文章使用Scrapy来实现各种爬虫爬取所需数据, 便于后续进行数据挖掘。代码托管在[Creeper](<https://github.com/lamborryan/Creeper>)。
+
+## [数据挖掘学习系列](<http://www.lamborryan.com/datamining-collect/>)
+
+* 基于Python自己实现数据挖掘算法demo, 利用爬虫爬取的数据来加深数据挖掘的理解。
+* 本系列文章托管在[MLStudy](<https://github.com/lamborryan/MLStudy>)。
 
 ## [Solr4.8.0源码分析系列](<http://www.lamborryan.com/solr-4.8.0>)
 
