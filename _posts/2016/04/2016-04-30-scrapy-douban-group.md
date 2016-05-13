@@ -290,15 +290,213 @@ parse, 当response没有指定回调函数时，该方法是Scrapy处理下载�
 
 #### CrawlSpider
 
+相比于Spider只能对单个网页进行爬取(不对网页内的link继续进行爬取), CrawlSpider支持从该网页为起点, 解析获取所需要的links, 并放入Scheduler中等待后续对links的爬取。因此使用CrawlSpider可以实现递归爬取。
+
+```python
+class DoubanGroupSpider(CrawlSpider):
+    name = 'doubanGroup'
+    allowed_domains = ["douban.com"]
+    start_urls = [
+        "http://www.douban.com/group/explore?tag=%E8%B4%AD%E7%89%A9",
+        "http://www.douban.com/group/explore?tag=%E7%94%9F%E6%B4%BB",
+        "http://www.douban.com/group/explore?tag=%E7%A4%BE%E4%BC%9A",
+        "http://www.douban.com/group/explore?tag=%E8%89%BA%E6%9C%AF",
+        "http://www.douban.com/group/explore?tag=%E5%AD%A6%E6%9C%AF",
+        "http://www.douban.com/group/explore?tag=%E6%83%85%E6%84%9F",
+        "http://www.douban.com/group/explore?tag=%E9%97%B2%E8%81%8A",
+        "http://www.douban.com/group/explore?tag=%E5%85%B4%E8%B6%A3"
+
+    ]
+
+    rules = [
+        ## 解析每一个group的主页, 爬取到这一层就不会再深入了
+        Rule(LinkExtractor(allow=('/group/[^/]+/$', )), callback='parse_group_home_page'),
+
+        ## 获取所有tag的路径, 并放入schedule, 后续要接着爬取各tag下的group url。
+        Rule(LinkExtractor(allow=('/group/explore\?tag')), follow=True),
+
+        ## 进入tag的页面后, 解析next, 获取下一页的group url
+        Rule(LinkExtractor(allow=('/group/explore[?]start=.*?[&]tag=.*?$'),
+                           restrict_xpaths=('//span[@class="next"]')),
+                           callback='parse_next_page',
+                           follow=True)
+    ]
+
+    def __get_id_from_group_url(self, url):
+        m =  re.search("^https://www.douban.com/group/([^/]+)/$", url)
+        if(m):
+            return m.group(1)
+        else:
+            return 0
+
+    def parse_next_page(self, response):
+        self.log("Fetch next page: %s" % response.url)
+
+    def parse_group_home_page(self, response):
+        self.log("Fetch douban homepage page: %s" % response.url)
+        sel = Selector(response)
+        item = DoubangroupItem()
+        item['groupName'] = sel.xpath('//h1/text()').re("^\s+(.*)\s+$")[0]
+        #get group id
+        item['groupURL'] = response.url
+        groupid = self.__get_id_from_group_url(response.url)
+
+        #get group members number
+        members_url = "https://www.douban.com/group/%s/members" % groupid
+        members_text = sel.xpath('//a[contains(@href, "%s")]/text()' % members_url).re("\((\d+)\)")
+        item['totalNumber'] = members_text[0]
+
+        #get relative groups
+        item['RelativeGroups'] = []
+        groups = sel.xpath('//div[contains(@class, "group-list-item")]')
+        for group in groups:
+            url = group.xpath('div[contains(@class, "title")]/a/@href').extract()[0]
+            item['RelativeGroups'].append(url)
+
+        return item
+```
+
+##### 在CrawlSpider中增加rules的属性, 它包含了多个爬取规则```class scrapy.contrib.spiders.Rule(link_extractor, callback=None, cb_kwargs=None, follow=None, process_links=None, process_request=None)```.
+
+##### 其中link_extractor是一个 Link Extractor 对象。其定义了如何从爬取到的页面提取链接。
+
+例如:
+
+```LinkExtractor(allow=('/group/explore\?tag'))``` 只抓取复合```/group/explore\?tag```正则的link
+
+```LinkExtractor(allow=('/group/explore[?]start=.*?[&]tag=.*?$'),restrict_xpaths=('//span[@class="next"]')))``` 只抓取符合```/group/explore[?]start=.*?[&]tag=.*?$```正则 且 约束在 ```//span[@class="next"]```该xpath路径下的连接。
+
+##### follow 是一个布尔(boolean)值，指定了根据该规则从response提取的链接是否需要跟进(后续是否需要接着爬)。 如果 callback 为None， follow 默认设置为 True ，否则默认为 False 。
+
+##### callback 是一个callable或string(该spider中同名的函数将会被调用)。 从link_extractor中每获取到链接时将会调用该函数。该回调函数接受一个response作为其第一个参数， 并返回一个包含 Item 以及(或) Request 对象(或者这两者的子类)的列表(list)。
+
+例如：
+
+```python
+Rule(LinkExtractor(allow=('/group/explore[?]start=.*?[&]tag=.*?$'),
+                   restrict_xpaths=('//span[@class="next"]')),
+                   callback='parse_next_page',
+                   follow=True)
+```
+
+当在```'//span[@class="next"]'```路径下找到符合```/group/explore[?]start=.*?[&]tag=.*?$```正则的连接时候, 就会回调函数
+
+```python
+def parse_next_page(self, response):
+    self.log("Fetch next page: %s" % response.url)
+```
+
+对response进行处理。
+
+还有很多Spider类型, 不过本文没用到, 所以就不展开了。 而如何解析豆瓣的html格式比较简单也不再深入展开。
+
 ### 4.3 pipelines
+
+当Item在Spider中被收集之后，它将会被传递到Item Pipeline，一些组件会按照一定的顺序执行对Item的处理。
+
+每个item pipeline组件(有时称之为“Item Pipeline”)是实现了简单方法的Python类。他们接收到Item并通过它执行一些行为，同时也决定此Item是否继续通过pipeline，或是被丢弃而不再进行处理。
+
+以下是item pipeline的一些典型应用：
+
+* 清理HTML数据
+* 验证爬取的数据(检查item包含某些字段)
+* 查重(并丢弃)
+* 将爬取结果保存到数据库中
+
+在这里我们使用pipelines来将爬取的item存储到mongo中。
+
+```python
+class MongoDBPipeline(object):
+
+     def __init__( self ):
+         host = settings[ 'MONGODB_SERVER' ]
+         port = settings[ 'MONGODB_PORT' ]
+         db = settings[ 'MONGODB_DB' ]
+         username = settings[ 'MONGODB_USE' ]
+         password = settings[ 'MONGODB_PASWD' ]
+         table = settings[ 'MONGODB_COLLECTION' ]
+         mongo_uri = 'mongodb://%s:%s@%s:%s/%s' % (username, password, host, port, db)
+         conn = MongoClient(mongo_uri)
+         self .collection = conn[db][table]
+
+     def process_item( self , item, spider):
+         valid = True
+         for data in item:
+           if not data:
+             valid = False
+             raise DropItem( "Missing {0}!" . format(data))
+         if valid:
+           self.collection.update({'groupURL': item['groupURL']}, dict(item), upsert=True)
+           log.msg( "Question added to MongoDB database!" ,level = log.DEBUG, spider = spider)
+         return item
+```
 
 ### 4.4 settings
 
+Settings包含了Scrapy的所有设置, 我们都可以通过该类来获取。设置可以在settings文件中进行。
+
+```python
+BOT_NAME = 'doubanGroup'
+
+SPIDER_MODULES = ['doubanGroup.spiders']
+NEWSPIDER_MODULE = 'doubanGroup.spiders'
+
+## 两次爬取任务的时间间隔, 防止被反爬虫
+DOWNLOAD_DELAY = 2
+RANDOMIZE_DOWNLOAD_DELAY = True
+
+## 模拟浏览器请求, 防止被反爬虫
+USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.54 Safari/536.5'
+COOKIES_ENABLED = True
+
+ITEM_PIPELINES = ['doubanGroup.pipelines.MongoDBPipeline']
+MONGODB_SERVER = 'lambo'
+MONGODB_PORT = 27017
+MONGODB_DB = 'Scrapy'
+MONGODB_COLLECTION = 'DoubanGroup'
+MONGODB_USE = 'scrapy'
+MONGODB_PASWD = 'aaaaaa'
+```
+
 ## 5. 总结
 
+本文简单介绍了爬虫原理, 以及使用spider来爬取豆瓣小组。
+
+```javascript
+{
+	"_id" : ObjectId("5721bae60af7dd1e5c14616d"),
+	"groupName" : "MOON magazine",
+	"groupURL" : "https://www.douban.com/group/MOONmag/",
+	"totalNumber" : "2629",
+	"RelativeGroups" : [
+		"https://www.douban.com/group/24884/",
+		"https://www.douban.com/group/jcremix/",
+		"https://www.douban.com/group/sdzine/",
+		"https://www.douban.com/group/24884/",
+		"https://www.douban.com/group/Hi-low/",
+		"https://www.douban.com/group/kinamagazine/",
+		"https://www.douban.com/group/toomagazine/",
+		"https://www.douban.com/group/soudian/",
+		"https://www.douban.com/group/56145/",
+		"https://www.douban.com/group/zhubian/",
+		"https://www.douban.com/group/jcremix/"
+	]
+}
+```
+
+接下来我将对这些数据进行社交网络的分析, 这就是另外一篇文章的内容了。
 
 ## 参考文献
 
 * [如何入门 Python 爬虫？](<https://www.zhihu.com/question/20899988>)
 * [Scrapy文档](<http://scrapy-chs.readthedocs.io/zh_CN/0.24/topics/architecture.html>)
 * [用Scrapy抓取豆瓣小组数据（一）](<http://my.oschina.net/chengye/blog/124157>)
+
+
+
+
+本文完
+
+* 原创文章，转载请注明： 转载自[Lamborryan](<http://www.lamborryan.com>)，作者：[Ruan Chengfeng](<http://www.lamborryan.com/about/>)
+* 本文链接地址：[http://www.lamborryan.com/scrapy-douban-group](<http://www.lamborryan.com/scrapy-douban-group>)
+* 本文基于[署名2.5中国大陆许可协议](<http://creativecommons.org/licenses/by/2.5/cn/>)发布，欢迎转载、演绎或用于商业目的，但是必须保留本文署名和文章链接。 如您有任何疑问或者授权方面的协商，请邮件联系我。
